@@ -171,29 +171,29 @@ const AboutFounderPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Bouton Retour */}
-      <div className="fixed top-4 left-4 z-50">
+      <div className="fixed top-2 left-2 z-50">
         <button
           onClick={() => window.history.back()}
-          className="flex items-center gap-2 bg-white/90 backdrop-blur-sm text-gray-700 px-4 py-2 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-200"
+          className="flex items-center gap-1 bg-white/95 backdrop-blur-sm text-gray-700 px-3 py-2 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-200 text-xs sm:text-sm"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-medium">Retour</span>
+          <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="font-medium hidden sm:inline">Retour</span>
         </button>
       </div>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#003399] to-[#00B0F0] text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative container mx-auto px-4 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="relative container mx-auto px-4 py-12 sm:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
                 {founderInfo.name}
               </h1>
-              <p className="text-2xl md:text-3xl text-white/90 mb-4">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-3 sm:mb-4">
                 {founderInfo.title}
               </p>
-              <p className="text-xl text-white/80 mb-8">
+              <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8">
                 {founderInfo.subtitle}
               </p>
               
@@ -212,7 +212,7 @@ const AboutFounderPage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4 mb-6">
+              <div className="flex flex-wrap gap-2 sm:gap-4 mb-6">
                 {socialLinks.map((social) => {
                   const IconComponent = social.icon;
                   return (
@@ -221,32 +221,32 @@ const AboutFounderPage = () => {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/30 transition-colors ${social.color}`}
+                      className={`flex items-center space-x-1 sm:space-x-2 bg-white/20 backdrop-blur-sm px-2 sm:px-4 py-2 rounded-full hover:bg-white/30 transition-colors ${social.color} text-xs sm:text-sm`}
                     >
-                      <IconComponent className="w-5 h-5" />
-                      <span>{social.name}</span>
+                      <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="hidden sm:inline">{social.name}</span>
                     </a>
                   );
                 })}
               </div>
               
               {/* Boutons d'action */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a
                   href="https://wa.me/24165515877?text=Bonjour, je souhaite demander un coaching avec Daniel Jonathan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center space-x-2 bg-[#25D366] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#128C7E] transition-colors"
+                  className="flex items-center justify-center space-x-2 bg-[#25D366] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold hover:bg-[#128C7E] transition-colors text-sm sm:text-base"
                 >
-                  <MessageCircle className="w-5 h-5" />
-                  <span>Demander un coaching</span>
+                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span>Coaching</span>
                 </a>
                 <a
                   href="#books"
-                  className="flex items-center justify-center space-x-2 bg-[#FFD700] text-[#003399] px-6 py-3 rounded-full font-semibold hover:bg-[#FFA500] transition-colors"
+                  className="flex items-center justify-center space-x-2 bg-[#FFD700] text-[#003399] px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold hover:bg-[#FFA500] transition-colors text-sm sm:text-base"
                 >
-                  <Book className="w-5 h-5" />
-                  <span>Voir ses livres</span>
+                  <Book className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span>Livres</span>
                 </a>
               </div>
             </div>

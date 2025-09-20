@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Application VOP - Supabase</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test de Connexion Application VOP</h1>
+    <div id="results"></div>
+
+    <script>
+        const supabaseUrl = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        async function testAppTables() {
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                resultsDiv.innerHTML = '<div class="section"><p class="info">🔍 Test de connexion en cours...</p></div>';
+                
+                // Test 1: Vérifier les tables de l'application
+                const appTables = ['articles', 'users', 'contacts', 'notifications', 'analytics', 'media_files'];
+                let allTablesExist = true;
+                
+                for (const table of appTables) {
+                    try {
+                        const { data, error } = await supabase
+                            .from(table)
+                            .select('count')
+                            .limit(1);
+                        
+                        if (error) {
+                            resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Table ${table}: ${error.message}</p></div>`;
+                            allTablesExist = false;
+                        } else {
+                            resultsDiv.innerHTML += `<div class="section"><p class="success">✅ Table ${table}: OK</p></div>`;
+                        }
+                    } catch (err) {
+                        resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Table ${table}: ${err.message}</p></div>`;
+                        allTablesExist = false;
+                    }
+                }
+                
+                if (!allTablesExist) {
+                    resultsDiv.innerHTML += '<div class="section"><p class="error">❌ Certaines tables manquent. Exécutez d\'abord schema-app-only.sql</p></div>';
+                    return;
+                }
+                
+                // Test 2: Vérifier les utilisateurs
+                resultsDiv.innerHTML += '<div class="section"><h3>👥 Utilisateurs</h3>';
+                const { data: users, error: usersError } = await supabase
+                    .from('users')
+                    .select('name, email, role, status');
+                
+                if (usersError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur utilisateurs: ${usersError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Utilisateurs trouvés:</p><ul>';
+                    users.forEach(user => {
+                        resultsDiv.innerHTML += `<li>${user.name} (${user.email}) - ${user.role} - ${user.status}</li>`;
+                    });
+                    resultsDiv.innerHTML += '</ul></div>';
+                }
+                
+                // Test 3: Vérifier les analytics
+                resultsDiv.innerHTML += '<div class="section"><h3>📊 Analytics</h3>';
+                const { data: analytics, error: analyticsError } = await supabase
+                    .from('analytics')
+                    .select('*')
+                    .limit(1);
+                
+                if (analyticsError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur analytics: ${analyticsError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Analytics trouvés:</p>';
+                    if (analytics.length > 0) {
+                        const stats = analytics[0];
+                        resultsDiv.innerHTML += `<ul>
+                            <li>Vues totales: ${stats.total_views}</li>
+                            <li>Articles: ${stats.total_articles}</li>
+                            <li>Utilisateurs: ${stats.total_users}</li>
+                            <li>Dons: ${stats.total_donations} FCFA</li>
+                            <li>Croissance: ${stats.monthly_growth}%</li>
+                        </ul>`;
+                    }
+                    resultsDiv.innerHTML += '</div>';
+                }
+                
+                // Test 4: Vérifier les notifications
+                resultsDiv.innerHTML += '<div class="section"><h3>🔔 Notifications</h3>';
+                const { data: notifications, error: notificationsError } = await supabase
+                    .from('notifications')
+                    .select('type, message, time, read')
+                    .limit(3);
+                
+                if (notificationsError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur notifications: ${notificationsError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Notifications trouvées:</p><ul>';
+                    notifications.forEach(notif => {
+                        resultsDiv.innerHTML += `<li>${notif.type}: ${notif.message} (${notif.time})</li>`;
+                    });
+                    resultsDiv.innerHTML += '</ul></div>';
+                }
+                
+                // Test 5: Test d'insertion (simulation)
+                resultsDiv.innerHTML += '<div class="section"><h3>✏️ Test d\'insertion</h3>';
+                try {
+                    const { data: testContact, error: testError } = await supabase
+                        .from('contacts')
+                        .insert({
+                            name: 'Test VOP',
+                            email: 'test@lavop.org',
+                            reason: 'general',
+                            message: 'Test de connexion application'
+                        })
+                        .select();
+                    
+                    if (testError) {
+                        resultsDiv.innerHTML += `<p class="error">❌ Erreur insertion: ${testError.message}</p></div>`;
+                    } else {
+                        resultsDiv.innerHTML += '<p class="success">✅ Test d\'insertion réussi!</p></div>';
+                    }
+                } catch (err) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur insertion: ${err.message}</p></div>`;
+                }
+                
+                resultsDiv.innerHTML += '<div class="section"><p class="success">🎉 Test terminé avec succès ! Votre application VOP est prête.</p></div>';
+                
+            } catch (err) {
+                resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Erreur générale: ${err.message}</p></div>`;
+                resultsDiv.innerHTML += '<div class="section"><p class="info">🔧 Solutions possibles:</p><ul>';
+                resultsDiv.innerHTML += '<li>Vérifiez que le projet Supabase est actif</li>';
+                resultsDiv.innerHTML += '<li>Exécutez d\'abord database/schema-app-only.sql</li>';
+                resultsDiv.innerHTML += '<li>Vérifiez les clés API</li>';
+                resultsDiv.innerHTML += '</ul></div>';
+            }
+        }
+        
+        // Lancer le test au chargement de la page
+        testAppTables();
+    </script>
+</body>
+</html>

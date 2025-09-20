@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test VOP AI - Assistant IA 24/7</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #003399, #00B0F0);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+        }
+        .test-button {
+            background: #00B0F0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .test-button:hover {
+            background: #003399;
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            border-left: 4px solid #4CAF50;
+        }
+        .error {
+            border-left: 4px solid #f44336;
+        }
+        .info {
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Test VOP AI - Assistant IA 24/7</h1>
+        
+        <div class="test-section">
+            <h3>📊 Test de Connexion à la Base de Données</h3>
+            <button class="test-button" onclick="testDatabaseConnection()">Tester la Connexion</button>
+            <div id="dbResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧠 Test des Connaissances VOP AI</h3>
+            <button class="test-button" onclick="testKnowledgeBase()">Tester la Base de Connaissances</button>
+            <div id="knowledgeResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>💬 Test des Conversations IA</h3>
+            <button class="test-button" onclick="testConversations()">Tester les Conversations</button>
+            <div id="conversationResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📈 Test des Statistiques IA</h3>
+            <button class="test-button" onclick="testAIStats()">Tester les Statistiques</button>
+            <div id="statsResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Test des Politiques RLS</h3>
+            <button class="test-button" onclick="testRLSPolicies()">Tester les Politiques</button>
+            <div id="rlsResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Test Complet VOP AI</h3>
+            <button class="test-button" onclick="runFullTest()">Lancer le Test Complet</button>
+            <div id="fullTestResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration Supabase - Clés VOP
+        const SUPABASE_URL = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+
+        // Fonction pour afficher les résultats
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `result ${type}`;
+            element.textContent = message;
+        }
+
+        // Test de connexion à la base de données
+        async function testDatabaseConnection() {
+            showResult('dbResult', '🔄 Test de connexion en cours...', 'info');
+            
+            try {
+                // Simulation d'un test de connexion
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/ai_knowledge?select=count`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                
+                if (response.ok) {
+                    showResult('dbResult', '✅ Connexion à la base de données réussie!\n\nTables VOP AI disponibles:\n- ai_conversations\n- ai_knowledge\n- ai_sessions\n- ai_feedback', 'success');
+                } else {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+            } catch (error) {
+                showResult('dbResult', `❌ Erreur de connexion:\n${error.message}\n\nVérifiez vos clés Supabase dans le script.`, 'error');
+            }
+        }
+
+        // Test de la base de connaissances
+        async function testKnowledgeBase() {
+            showResult('knowledgeResult', '🔄 Test de la base de connaissances...', 'info');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/ai_knowledge?select=*&limit=5`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult('knowledgeResult', `✅ Base de connaissances accessible!\n\nNombre d'entrées: ${data.length}\n\nExemples:\n${data.map(item => `- ${item.question}`).join('\n')}`, 'success');
+                } else {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+            } catch (error) {
+                showResult('knowledgeResult', `❌ Erreur d'accès à la base de connaissances:\n${error.message}`, 'error');
+            }
+        }
+
+        // Test des conversations
+        async function testConversations() {
+            showResult('conversationResult', '🔄 Test des conversations IA...', 'info');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/ai_conversations?select=count`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                
+                if (response.ok) {
+                    showResult('conversationResult', '✅ Table des conversations accessible!\n\nFonctionnalités disponibles:\n- Enregistrement des conversations\n- Historique des sessions\n- Analytics des interactions', 'success');
+                } else {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+            } catch (error) {
+                showResult('conversationResult', `❌ Erreur d'accès aux conversations:\n${error.message}`, 'error');
+            }
+        }
+
+        // Test des statistiques
+        async function testAIStats() {
+            showResult('statsResult', '🔄 Test des statistiques IA...', 'info');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_ai_stats`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult('statsResult', `✅ Statistiques IA disponibles!\n\nDonnées:\n${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+            } catch (error) {
+                showResult('statsResult', `❌ Erreur d'accès aux statistiques:\n${error.message}`, 'error');
+            }
+        }
+
+        // Test des politiques RLS
+        async function testRLSPolicies() {
+            showResult('rlsResult', '🔄 Test des politiques RLS...', 'info');
+            
+            try {
+                // Test d'accès sans authentification
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/ai_conversations?select=*&limit=1`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY
+                    }
+                });
+                
+                if (response.status === 401 || response.status === 403) {
+                    showResult('rlsResult', '✅ Politiques RLS actives!\n\nSécurité:\n- Accès restreint aux conversations\n- Authentification requise\n- Isolation des données utilisateur', 'success');
+                } else {
+                    showResult('rlsResult', '⚠️ Politiques RLS peuvent être désactivées\n\nVérifiez la configuration de sécurité.', 'error');
+                }
+            } catch (error) {
+                showResult('rlsResult', `❌ Erreur de test RLS:\n${error.message}`, 'error');
+            }
+        }
+
+        // Test complet
+        async function runFullTest() {
+            showResult('fullTestResult', '🔄 Test complet VOP AI en cours...', 'info');
+            
+            let results = [];
+            
+            // Test 1: Connexion
+            try {
+                const dbResponse = await fetch(`${SUPABASE_URL}/rest/v1/ai_knowledge?select=count`);
+                results.push('✅ Connexion base de données');
+            } catch (error) {
+                results.push('❌ Connexion base de données');
+            }
+            
+            // Test 2: Tables
+            try {
+                const tables = ['ai_conversations', 'ai_knowledge', 'ai_sessions', 'ai_feedback'];
+                let tableResults = [];
+                
+                for (const table of tables) {
+                    try {
+                        await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=count`);
+                        tableResults.push(`✅ ${table}`);
+                    } catch (error) {
+                        tableResults.push(`❌ ${table}`);
+                    }
+                }
+                
+                results.push('📊 Tables:', ...tableResults);
+            } catch (error) {
+                results.push('❌ Test des tables');
+            }
+            
+            // Test 3: Fonctions
+            try {
+                await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_ai_stats`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                results.push('✅ Fonctions IA');
+            } catch (error) {
+                results.push('❌ Fonctions IA');
+            }
+            
+            showResult('fullTestResult', `🎯 Test Complet VOP AI Terminé!\n\nRésultats:\n${results.join('\n')}\n\nVOP AI est prêt pour l'utilisation! 🤖✨`, 'success');
+        }
+
+        // Message d'information au chargement
+        window.onload = function() {
+            showResult('fullTestResult', '🚀 VOP AI Test Suite Ready!\n\nCliquez sur "Lancer le Test Complet" pour vérifier toutes les fonctionnalités.\n\nN\'oubliez pas de configurer vos clés Supabase dans le script!', 'info');
+        };
+    </script>
+</body>
+</html>

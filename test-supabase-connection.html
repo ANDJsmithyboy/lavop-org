@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Connexion Supabase - LA VOP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #003399, #00B0F0);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+        }
+        .test-button {
+            background: #00B0F0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .test-button:hover {
+            background: #003399;
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success {
+            border-left: 4px solid #4CAF50;
+        }
+        .error {
+            border-left: 4px solid #f44336;
+        }
+        .info {
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Test Connexion Supabase - LA VOP</h1>
+        
+        <div class="test-section">
+            <h3>📊 Test de Connexion de Base</h3>
+            <button class="test-button" onclick="testBasicConnection()">Tester la Connexion</button>
+            <div id="basicResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🗄️ Test des Tables Existantes</h3>
+            <button class="test-button" onclick="testExistingTables()">Tester les Tables</button>
+            <div id="tablesResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🤖 Test des Tables VOP AI</h3>
+            <button class="test-button" onclick="testVOPAITables()">Tester VOP AI</button>
+            <div id="vopaiResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 Instructions SQL</h3>
+            <div class="result info">
+                <strong>Pour activer VOP AI, exécutez ce script dans Supabase SQL Editor:</strong>
+
+                <code>
+-- Copiez et exécutez ce script dans Supabase SQL Editor
+-- Fichier: database/schema-vop-ai.sql
+
+-- Ou exécutez directement ces commandes:
+
+-- 1. Créer les tables VOP AI
+CREATE TABLE IF NOT EXISTS ai_conversations (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  session_id VARCHAR(255) NOT NULL,
+  user_message TEXT NOT NULL,
+  ai_response TEXT NOT NULL,
+  context JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS ai_knowledge (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  category VARCHAR(100) NOT NULL,
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  keywords TEXT[],
+  priority INTEGER DEFAULT 1,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. Activer RLS
+ALTER TABLE ai_conversations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ai_knowledge ENABLE ROW LEVEL SECURITY;
+
+-- 3. Créer les politiques
+CREATE POLICY "Everyone can view active knowledge" ON ai_knowledge
+  FOR SELECT USING (is_active = true);
+
+-- 4. Insérer des données de test
+INSERT INTO ai_knowledge (category, question, answer, keywords, priority) VALUES
+('general', 'Qu''est-ce que LA VOP ?', 'LA VOP (L''Amour de Dieu en Action) est une ONG internationale qui aide les orphelins, les veuves et les pauvres.', ARRAY['vop', 'ong', 'mission'], 5);
+                </code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration Supabase - Clés VOP
+        const SUPABASE_URL = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+
+        // Fonction pour afficher les résultats
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `result ${type}`;
+            element.textContent = message;
+        }
+
+        // Test de connexion de base
+        async function testBasicConnection() {
+            showResult('basicResult', '🔄 Test de connexion en cours...', 'info');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                
+                if (response.ok) {
+                    showResult('basicResult', '✅ Connexion Supabase réussie!\n\nURL: ' + SUPABASE_URL + '\nClé: ' + SUPABASE_ANON_KEY.substring(0, 20) + '...', 'success');
+                } else {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+            } catch (error) {
+                showResult('basicResult', `❌ Erreur de connexion:\n${error.message}`, 'error');
+            }
+        }
+
+        // Test des tables existantes
+        async function testExistingTables() {
+            showResult('tablesResult', '🔄 Test des tables existantes...', 'info');
+            
+            const tables = ['articles', 'users', 'contacts', 'notifications', 'analytics'];
+            let results = [];
+            
+            for (const table of tables) {
+                try {
+                    const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=count`, {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        results.push(`✅ ${table}`);
+                    } else {
+                        results.push(`❌ ${table} (${response.status})`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${table} (erreur)`);
+                }
+            }
+            
+            showResult('tablesResult', `📊 Tables existantes:\n${results.join('\n')}`, 'success');
+        }
+
+        // Test des tables VOP AI
+        async function testVOPAITables() {
+            showResult('vopaiResult', '🔄 Test des tables VOP AI...', 'info');
+            
+            const vopaiTables = ['ai_conversations', 'ai_knowledge', 'ai_sessions', 'ai_feedback'];
+            let results = [];
+            
+            for (const table of vopaiTables) {
+                try {
+                    const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=count`, {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        results.push(`✅ ${table}`);
+                    } else if (response.status === 404) {
+                        results.push(`⚠️ ${table} (table non créée)`);
+                    } else {
+                        results.push(`❌ ${table} (${response.status})`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${table} (erreur)`);
+                }
+            }
+            
+            if (results.some(r => r.includes('⚠️'))) {
+                showResult('vopaiResult', `🤖 Tables VOP AI:\n${results.join('\n')}\n\n⚠️ Certaines tables ne sont pas encore créées.\nExécutez le script SQL dans Supabase!`, 'error');
+            } else {
+                showResult('vopaiResult', `🤖 Tables VOP AI:\n${results.join('\n')}\n\n✅ Toutes les tables VOP AI sont créées!`, 'success');
+            }
+        }
+
+        // Message d'information au chargement
+        window.onload = function() {
+            showResult('basicResult', '🚀 Test de Connexion Supabase Ready!\n\nCliquez sur "Tester la Connexion" pour commencer.', 'info');
+        };
+    </script>
+</body>
+</html>

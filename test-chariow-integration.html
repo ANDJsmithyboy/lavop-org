@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Intégration Chariow - La VOP</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .chariow-link { background: #f0f8ff; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        .chariow-link a { color: #0066cc; text-decoration: none; font-weight: bold; }
+        .chariow-link a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>🛒 Test d'Intégration Chariow - La VOP</h1>
+    <div id="results"></div>
+
+    <script>
+        const supabaseUrl = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        async function testChariowIntegration() {
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                resultsDiv.innerHTML = '<div class="section"><p class="info">🔍 Test de l\'intégration Chariow en cours...</p></div>';
+                
+                // Test 1: Vérifier les tables de l'application
+                const appTables = ['articles', 'users', 'contacts', 'notifications', 'analytics', 'programs', 'chariow_orders', 'settings'];
+                let allTablesExist = true;
+                
+                for (const table of appTables) {
+                    try {
+                        const { data, error } = await supabase
+                            .from(table)
+                            .select('count')
+                            .limit(1);
+                        
+                        if (error) {
+                            resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Table ${table}: ${error.message}</p></div>`;
+                            allTablesExist = false;
+                        } else {
+                            resultsDiv.innerHTML += `<div class="section"><p class="success">✅ Table ${table}: OK</p></div>`;
+                        }
+                    } catch (err) {
+                        resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Table ${table}: ${err.message}</p></div>`;
+                        allTablesExist = false;
+                    }
+                }
+                
+                if (!allTablesExist) {
+                    resultsDiv.innerHTML += '<div class="section"><p class="error">❌ Certaines tables manquent. Exécutez d\'abord database/schema-chariow-ong.sql</p></div>';
+                    return;
+                }
+                
+                // Test 2: Vérifier les programmes avec liens Chariow
+                resultsDiv.innerHTML += '<div class="section"><h3>🎯 Programmes de Don Chariow</h3>';
+                const { data: programs, error: programsError } = await supabase
+                    .from('programs')
+                    .select('name, description, target_amount, current_amount, chariow_url, chariow_product_id');
+                
+                if (programsError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur programmes: ${programsError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Programmes trouvés:</p>';
+                    programs.forEach(program => {
+                        const progress = program.target_amount > 0 ? (program.current_amount / program.target_amount * 100).toFixed(1) : 0;
+                        resultsDiv.innerHTML += `
+                            <div class="chariow-link">
+                                <h4>${program.name}</h4>
+                                <p>${program.description}</p>
+                                <p><strong>Objectif:</strong> ${program.target_amount}€ | <strong>Collecté:</strong> ${program.current_amount}€ (${progress}%)</p>
+                                <p><strong>ID Chariow:</strong> ${program.chariow_product_id}</p>
+                                <p><strong>Lien Chariow:</strong> <a href="${program.chariow_url}" target="_blank">${program.chariow_url}</a></p>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML += '</div>';
+                }
+                
+                // Test 3: Vérifier les paramètres Chariow
+                resultsDiv.innerHTML += '<div class="section"><h3>⚙️ Paramètres Chariow</h3>';
+                const { data: settings, error: settingsError } = await supabase
+                    .from('settings')
+                    .select('key, value, description')
+                    .like('key', '%chariow%');
+                
+                if (settingsError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur paramètres: ${settingsError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Paramètres Chariow trouvés:</p><ul>';
+                    settings.forEach(setting => {
+                        resultsDiv.innerHTML += `<li><strong>${setting.key}:</strong> ${setting.value} - ${setting.description}</li>`;
+                    });
+                    resultsDiv.innerHTML += '</ul></div>';
+                }
+                
+                // Test 4: Vérifier les commandes Chariow
+                resultsDiv.innerHTML += '<div class="section"><h3>📦 Commandes Chariow</h3>';
+                const { data: orders, error: ordersError } = await supabase
+                    .from('chariow_orders')
+                    .select('order_id, customer_name, product_name, amount, status, created_at')
+                    .limit(5);
+                
+                if (ordersError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur commandes: ${ordersError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Commandes trouvées:</p>';
+                    if (orders.length > 0) {
+                        resultsDiv.innerHTML += '<ul>';
+                        orders.forEach(order => {
+                            resultsDiv.innerHTML += `<li><strong>${order.order_id}:</strong> ${order.product_name} - ${order.amount}€ - ${order.status}</li>`;
+                        });
+                        resultsDiv.innerHTML += '</ul>';
+                    } else {
+                        resultsDiv.innerHTML += '<p>Aucune commande trouvée (normal pour un nouveau site)</p>';
+                    }
+                    resultsDiv.innerHTML += '</div>';
+                }
+                
+                // Test 5: Liens de test Chariow
+                resultsDiv.innerHTML += '<div class="section"><h3>🔗 Liens de Test Chariow</h3>';
+                resultsDiv.innerHTML += '<p class="info">Testez ces liens pour vérifier l\'intégration:</p>';
+                
+                const testLinks = [
+                    { name: 'Boutique Officielle VOP', url: 'https://www.contrado.fr/stores/vop-shop' },
+                    { name: 'Don Libre', url: 'https://www.contrado.fr/stores/vop-shop/don-libre' },
+                    { name: 'Don Programme Veuves', url: 'https://www.contrado.fr/stores/vop-shop/don-programme-veuves' },
+                    { name: 'Don Programme Orphelins', url: 'https://www.contrado.fr/stores/vop-shop/don-programme-orphelins' },
+                    { name: 'T-shirt VOPyouth', url: 'https://www.contrado.fr/stores/vop-shop/tshirt-vopyouth' },
+                    { name: 'Le Coaching Ultime', url: 'https://www.contrado.fr/stores/vop-shop/le-coaching-ultime' }
+                ];
+                
+                testLinks.forEach(link => {
+                    resultsDiv.innerHTML += `
+                        <div class="chariow-link">
+                            <a href="${link.url}" target="_blank">${link.name}</a>
+                        </div>
+                    `;
+                });
+                
+                resultsDiv.innerHTML += '</div>';
+                
+                resultsDiv.innerHTML += '<div class="section"><p class="success">🎉 Test d\'intégration Chariow terminé avec succès !</p></div>';
+                
+            } catch (err) {
+                resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Erreur générale: ${err.message}</p></div>`;
+                resultsDiv.innerHTML += '<div class="section"><p class="info">🔧 Solutions possibles:</p><ul>';
+                resultsDiv.innerHTML += '<li>Vérifiez que le projet Supabase est actif</li>';
+                resultsDiv.innerHTML += '<li>Exécutez d\'abord database/schema-chariow-ong.sql</li>';
+                resultsDiv.innerHTML += '<li>Vérifiez les clés API</li>';
+                resultsDiv.innerHTML += '</ul></div>';
+            }
+        }
+        
+        // Lancer le test au chargement de la page
+        testChariowIntegration();
+    </script>
+</body>
+</html>

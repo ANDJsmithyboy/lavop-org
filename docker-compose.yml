@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # Application VOP
+  vop-app:
+    build: .
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - vop-network
+
+  # Base de données Supabase (simulation locale)
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: vop_db
+      POSTGRES_USER: vop_user
+      POSTGRES_PASSWORD: vop_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - vop-network
+
+  # Redis pour le cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - vop-network
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - vop-app
+    restart: unless-stopped
+    networks:
+      - vop-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  vop-network:
+    driver: bridge

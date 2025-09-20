@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Final Corrigé - LA VOP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #003399, #00B0F0);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+        }
+        .test-button {
+            background: #00B0F0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .test-button:hover {
+            background: #003399;
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            border-left: 4px solid #4CAF50;
+        }
+        .error {
+            border-left: 4px solid #f44336;
+        }
+        .info {
+            border-left: 4px solid #2196F3;
+        }
+        .warning {
+            border-left: 4px solid #FF9800;
+        }
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Test Final Corrigé - LA VOP</h1>
+        
+        <div class="step">
+            <h3>📋 Corrections Appliquées</h3>
+            <div class="result info">
+                <strong>✅ Erreurs TypeScript corrigées :</strong>
+                - Import 'User' non utilisé supprimé
+                - Variable 'selectedCustomProduct' non utilisée commentée
+
+                <strong>✅ Configuration Vercel mise à jour :</strong>
+                - URL: https://lavop-org.vercel.app (domaine Vercel gratuit)
+                - Prêt pour le déploiement immédiat
+
+                <strong>📋 Script de correction RLS :</strong>
+                - database/fix-all-tables-rls.sql
+                - Corrige les erreurs 500 sur articles et users
+                - Exécutez ce script dans Supabase SQL Editor
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Test de Connexion</h3>
+            <button class="test-button" onclick="testConnection()">Tester la Connexion</button>
+            <div id="connectionResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Test des Tables (Après Correction RLS)</h3>
+            <button class="test-button" onclick="testTables()">Tester les Tables</button>
+            <div id="tablesResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🤖 Test VOP AI</h3>
+            <button class="test-button" onclick="testVOPAI()">Tester VOP AI</button>
+            <div id="vopaiResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Test Complet Final</h3>
+            <button class="test-button" onclick="runFinalTest()">Test Complet</button>
+            <div id="finalResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Instructions de Déploiement Vercel</h3>
+            <div class="result info">
+                <strong>🎯 LA VOP est prête pour Vercel !</strong>
+
+                <strong>Étapes de déploiement :</strong>
+
+                1. <strong>Exécuter le script RLS :</strong>
+                   - Ouvrir Supabase SQL Editor
+                   - Copier le contenu de database/fix-all-tables-rls.sql
+                   - Exécuter le script
+
+                2. <strong>Déployer sur Vercel :</strong>
+                   npm install -g vercel
+                   vercel login
+                   vercel --prod
+
+                3. <strong>URL finale :</strong>
+                   https://lavop-org.vercel.app
+
+                4. <strong>Variables d'environnement (automatiques) :</strong>
+                   - VITE_SUPABASE_URL
+                   - VITE_SUPABASE_ANON_KEY
+                   - VITE_APP_NAME=LA VOP
+                   - VITE_APP_URL=https://lavop-org.vercel.app
+                   - VITE_WHATSAPP_NUMBER=+24165515877
+
+                <strong>✅ Prêt pour la production !</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration Supabase
+        const SUPABASE_URL = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `result ${type}`;
+            element.textContent = message;
+        }
+
+        async function testConnection() {
+            showResult('connectionResult', '🔄 Test de connexion...', 'info');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                
+                if (response.ok) {
+                    showResult('connectionResult', '✅ Connexion Supabase réussie!\n\nPrêt pour le déploiement Vercel.', 'success');
+                } else {
+                    showResult('connectionResult', `❌ Erreur de connexion: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showResult('connectionResult', `❌ Erreur: ${error.message}`, 'error');
+            }
+        }
+
+        async function testTables() {
+            showResult('tablesResult', '🔄 Test des tables après correction RLS...', 'info');
+            
+            const tables = ['articles', 'users', 'contacts', 'notifications', 'analytics', 'ai_knowledge'];
+            let results = [];
+            let allSuccess = true;
+            
+            for (const table of tables) {
+                try {
+                    const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=count`, {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        results.push(`✅ ${table}`);
+                    } else if (response.status === 500) {
+                        results.push(`⚠️ ${table} (500 - Exécutez fix-all-tables-rls.sql)`);
+                        allSuccess = false;
+                    } else {
+                        results.push(`❌ ${table} (${response.status})`);
+                        allSuccess = false;
+                    }
+                } catch (error) {
+                    results.push(`❌ ${table} (erreur)`);
+                    allSuccess = false;
+                }
+            }
+            
+            const resultType = allSuccess ? 'success' : 'warning';
+            const message = allSuccess 
+                ? `📊 Tables:\n${results.join('\n')}\n\n✅ Toutes les tables sont accessibles!`
+                : `📊 Tables:\n${results.join('\n')}\n\n⚠️ Exécutez database/fix-all-tables-rls.sql dans Supabase`;
+            
+            showResult('tablesResult', message, resultType);
+        }
+
+        async function testVOPAI() {
+            showResult('vopaiResult', '🔄 Test VOP AI...', 'info');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/ai_knowledge?select=*&limit=3`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult('vopaiResult', `✅ VOP AI opérationnel!\n\nTrouvé ${data.length} entrées de connaissances.\n\nExemples:\n${data.map(item => `• ${item.question}`).join('\n')}`, 'success');
+                } else {
+                    showResult('vopaiResult', `❌ Erreur VOP AI: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showResult('vopaiResult', `❌ Erreur: ${error.message}`, 'error');
+            }
+        }
+
+        async function runFinalTest() {
+            showResult('finalResult', '🔄 Test final complet...', 'info');
+            
+            const tests = [
+                { name: 'Connexion Supabase', test: () => fetch(`${SUPABASE_URL}/rest/v1/`, { headers: { 'apikey': SUPABASE_ANON_KEY } }) },
+                { name: 'VOP AI', test: () => fetch(`${SUPABASE_URL}/rest/v1/ai_knowledge?select=count`, { headers: { 'apikey': SUPABASE_ANON_KEY } }) },
+                { name: 'Articles', test: () => fetch(`${SUPABASE_URL}/rest/v1/articles?select=count`, { headers: { 'apikey': SUPABASE_ANON_KEY } }) },
+                { name: 'Utilisateurs', test: () => fetch(`${SUPABASE_URL}/rest/v1/users?select=count`, { headers: { 'apikey': SUPABASE_ANON_KEY } }) }
+            ];
+            
+            let results = [];
+            let allSuccess = true;
+            
+            for (const test of tests) {
+                try {
+                    const response = await test.test();
+                    if (response.ok) {
+                        results.push(`✅ ${test.name}`);
+                    } else if (response.status === 500) {
+                        results.push(`⚠️ ${test.name} (500 - Corriger RLS)`);
+                        allSuccess = false;
+                    } else {
+                        results.push(`❌ ${test.name} (${response.status})`);
+                        allSuccess = false;
+                    }
+                } catch (error) {
+                    results.push(`❌ ${test.name} (erreur)`);
+                    allSuccess = false;
+                }
+            }
+            
+            const resultType = allSuccess ? 'success' : 'warning';
+            const message = allSuccess 
+                ? `🎯 Test Final Terminé!\n\nRésultats:\n${results.join('\n')}\n\n🚀 LA VOP est prête pour Vercel!\n\n✅ Tous les systèmes opérationnels\n✅ VOP AI fonctionnel\n✅ Erreurs TypeScript corrigées\n✅ Configuration Vercel prête\n\n🎉 Déployez maintenant sur Vercel!`
+                : `🎯 Test Final Terminé!\n\nRésultats:\n${results.join('\n')}\n\n⚠️ Exécutez database/fix-all-tables-rls.sql dans Supabase\n\nPuis redéployez sur Vercel.`;
+            
+            showResult('finalResult', message, resultType);
+        }
+
+        // Message d'information au chargement
+        window.onload = function() {
+            showResult('connectionResult', '🚀 Test Final Corrigé Ready!\n\n1. Exécutez database/fix-all-tables-rls.sql dans Supabase\n2. Puis cliquez sur "Tester la Connexion"', 'info');
+        };
+    </script>
+</body>
+</html>

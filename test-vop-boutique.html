@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Boutique VOP - Contrado/Chariow</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .product { background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #003399; }
+        .product h4 { margin: 0 0 10px 0; color: #003399; }
+        .product a { color: #0066cc; text-decoration: none; font-weight: bold; }
+        .product a:hover { text-decoration: underline; }
+        .price { font-size: 1.2em; font-weight: bold; color: #e74c3c; }
+        .original-price { text-decoration: line-through; color: #999; }
+        .status { padding: 4px 8px; border-radius: 4px; font-size: 0.9em; font-weight: bold; }
+        .available { background: #d4edda; color: #155724; }
+        .coming-soon { background: #fff3cd; color: #856404; }
+        .external-link { background: #e2e3e5; color: #383d41; }
+    </style>
+</head>
+<body>
+    <h1>🛒 Test Boutique VOP - Contrado/Chariow</h1>
+    <div id="results"></div>
+
+    <script>
+        const supabaseUrl = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        async function testVOPBoutique() {
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                resultsDiv.innerHTML = '<div class="section"><p class="info">🔍 Test de la boutique VOP en cours...</p></div>';
+                
+                // Test 1: Vérifier les tables de la boutique
+                const boutiqueTables = ['products', 'external_links', 'programs', 'settings'];
+                let allTablesExist = true;
+                
+                for (const table of boutiqueTables) {
+                    try {
+                        const { data, error } = await supabase
+                            .from(table)
+                            .select('count')
+                            .limit(1);
+                        
+                        if (error) {
+                            resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Table ${table}: ${error.message}</p></div>`;
+                            allTablesExist = false;
+                        } else {
+                            resultsDiv.innerHTML += `<div class="section"><p class="success">✅ Table ${table}: OK</p></div>`;
+                        }
+                    } catch (err) {
+                        resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Table ${table}: ${err.message}</p></div>`;
+                        allTablesExist = false;
+                    }
+                }
+                
+                if (!allTablesExist) {
+                    resultsDiv.innerHTML += '<div class="section"><p class="error">❌ Certaines tables manquent. Exécutez d\'abord database/schema-vop-complete.sql</p></div>';
+                    return;
+                }
+                
+                // Test 2: Vérifier les produits T-shirts
+                resultsDiv.innerHTML += '<div class="section"><h3>👕 T-shirts VOP</h3>';
+                const { data: tshirts, error: tshirtsError } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('type', 'tshirt');
+                
+                if (tshirtsError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur T-shirts: ${tshirtsError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ T-shirts trouvés:</p>';
+                    tshirts.forEach(product => {
+                        const statusClass = product.status === 'available' ? 'available' : 'coming-soon';
+                        resultsDiv.innerHTML += `
+                            <div class="product">
+                                <h4>${product.name}</h4>
+                                <p>${product.description}</p>
+                                <p class="price">
+                                    ${product.price}€ 
+                                    ${product.original_price ? `<span class="original-price">(${product.original_price}€)</span>` : ''}
+                                </p>
+                                <p><span class="status ${statusClass}">${product.status}</span></p>
+                                <p><strong>Tailles:</strong> ${product.sizes ? product.sizes.join(', ') : 'N/A'}</p>
+                                <p><strong>Couleurs:</strong> ${product.colors ? product.colors.join(', ') : 'N/A'}</p>
+                                <p><strong>Note:</strong> ${product.rating}/5 (${product.reviews_count} avis)</p>
+                                <p><strong>Lien Contrado:</strong> <a href="${product.contrado_url}" target="_blank">${product.contrado_url}</a></p>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML += '</div>';
+                }
+                
+                // Test 3: Vérifier les livres
+                resultsDiv.innerHTML += '<div class="section"><h3>📚 Livres VOP</h3>';
+                const { data: livres, error: livresError } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('type', 'livre');
+                
+                if (livresError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur livres: ${livresError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Livres trouvés:</p>';
+                    livres.forEach(product => {
+                        const statusClass = product.status === 'available' ? 'available' : 'coming-soon';
+                        resultsDiv.innerHTML += `
+                            <div class="product">
+                                <h4>${product.name}</h4>
+                                <p>${product.description}</p>
+                                <p class="price">
+                                    ${product.price}€ 
+                                    ${product.original_price ? `<span class="original-price">(${product.original_price}€)</span>` : ''}
+                                </p>
+                                <p><span class="status ${statusClass}">${product.status}</span></p>
+                                <p><strong>Auteur:</strong> ${product.author}</p>
+                                <p><strong>Caractéristiques:</strong> ${product.features ? product.features.join(', ') : 'N/A'}</p>
+                                <p><strong>Note:</strong> ${product.rating}/5 (${product.reviews_count} avis)</p>
+                                <p><strong>Lien Contrado:</strong> <a href="${product.contrado_url}" target="_blank">${product.contrado_url}</a></p>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML += '</div>';
+                }
+                
+                // Test 4: Vérifier les liens externes
+                resultsDiv.innerHTML += '<div class="section"><h3>🔗 Liens Externes Chrétiens</h3>';
+                const { data: externes, error: externesError } = await supabase
+                    .from('external_links')
+                    .select('*')
+                    .eq('status', 'active');
+                
+                if (externesError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur liens externes: ${externesError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Liens externes trouvés:</p>';
+                    externes.forEach(link => {
+                        resultsDiv.innerHTML += `
+                            <div class="product">
+                                <h4>${link.title}</h4>
+                                <p>${link.description}</p>
+                                <p><strong>Auteur:</strong> ${link.author}</p>
+                                <p><strong>Éditeur:</strong> ${link.publisher}</p>
+                                <p class="price">${link.price}€</p>
+                                <p><strong>Lien externe:</strong> <a href="${link.url}" target="_blank">${link.url}</a></p>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML += '</div>';
+                }
+                
+                // Test 5: Vérifier les programmes de don
+                resultsDiv.innerHTML += '<div class="section"><h3>💝 Programmes de Don</h3>';
+                const { data: programmes, error: programmesError } = await supabase
+                    .from('programs')
+                    .select('*');
+                
+                if (programmesError) {
+                    resultsDiv.innerHTML += `<p class="error">❌ Erreur programmes: ${programmesError.message}</p></div>`;
+                } else {
+                    resultsDiv.innerHTML += '<p class="success">✅ Programmes trouvés:</p>';
+                    programmes.forEach(program => {
+                        const progress = program.target_amount > 0 ? (program.current_amount / program.target_amount * 100).toFixed(1) : 0;
+                        resultsDiv.innerHTML += `
+                            <div class="product">
+                                <h4>${program.name}</h4>
+                                <p>${program.description}</p>
+                                <p><strong>Objectif:</strong> ${program.target_amount}€ | <strong>Collecté:</strong> ${program.current_amount}€ (${progress}%)</p>
+                                <p><strong>Lien Contrado:</strong> <a href="${program.contrado_url}" target="_blank">${program.contrado_url}</a></p>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML += '</div>';
+                }
+                
+                // Test 6: Liens de test
+                resultsDiv.innerHTML += '<div class="section"><h3>🔗 Liens de Test Boutique</h3>';
+                resultsDiv.innerHTML += '<p class="info">Testez ces liens pour vérifier l\'intégration Contrado:</p>';
+                
+                const testLinks = [
+                    // Boutique officielle Contrado
+                    { name: 'Boutique Officielle VOP (Contrado)', url: 'https://www.contrado.fr/stores/vop-shop/' },
+                    { name: 'T-shirt VOP Principal', url: 'https://www.contrado.fr/stores/vop-shop/vop-t-shirt-2586577' },
+                    { name: 'T-shirt VOPyouth', url: 'https://www.contrado.fr/stores/vop-shop/vopyouth-t-shirt-2586607' },
+                    { name: 'T-shirt VOPsong', url: 'https://www.contrado.fr/stores/vop-shop/vopsongmusic-t-shirt-2586610' },
+                    
+                    // Livres Chariow
+                    { name: 'Comment investir dans ces temps de la fin ?', url: 'https://njunarse.mychariow.store/andjguidepratique' },
+                    { name: 'La Prophétie du Bitcoin', url: 'https://njunarse.mychariow.store/prophetie-bitcoin' },
+                    { name: 'L\'Algorithme du Ciel', url: 'https://njunarse.mychariow.store/l-algorithme-du-ciel' },
+                    
+                    // Dons Chariow (tous redirigent vers don-montant-libre)
+                    { name: 'Don Libre', url: 'https://obsxsyzu.mychariow.store/don-montant-libre' },
+                    { name: 'Don Programme Veuves', url: 'https://obsxsyzu.mychariow.store/don-montant-libre' },
+                    { name: 'Don Programme Orphelins', url: 'https://obsxsyzu.mychariow.store/don-montant-libre' },
+                    { name: 'Don Programme Éducation', url: 'https://obsxsyzu.mychariow.store/don-montant-libre' },
+                    
+                    // Liens externes
+                    { name: 'Chrétien, es-tu un Lion ou une Brebis ?', url: 'https://www.decitre.fr/ebooks/chretien-es-tu-un-lion-ou-une-brebis-9782379797323_9782379797323_1.html' }
+                ];
+                
+                testLinks.forEach(link => {
+                    resultsDiv.innerHTML += `
+                        <div class="product">
+                            <a href="${link.url}" target="_blank">${link.name}</a>
+                        </div>
+                    `;
+                });
+                
+                resultsDiv.innerHTML += '</div>';
+                
+                resultsDiv.innerHTML += '<div class="section"><p class="success">🎉 Test de la boutique VOP terminé avec succès !</p></div>';
+                
+            } catch (err) {
+                resultsDiv.innerHTML += `<div class="section"><p class="error">❌ Erreur générale: ${err.message}</p></div>`;
+                resultsDiv.innerHTML += '<div class="section"><p class="info">🔧 Solutions possibles:</p><ul>';
+                resultsDiv.innerHTML += '<li>Vérifiez que le projet Supabase est actif</li>';
+                resultsDiv.innerHTML += '<li>Exécutez d\'abord database/schema-vop-complete.sql</li>';
+                resultsDiv.innerHTML += '<li>Vérifiez les clés API</li>';
+                resultsDiv.innerHTML += '</ul></div>';
+            }
+        }
+        
+        // Lancer le test au chargement de la page
+        testVOPBoutique();
+    </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Supabase - LA VOP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #003399, #00B0F0);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #FFD700;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+        }
+        .test-button {
+            background: #00B0F0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .test-button:hover {
+            background: #003399;
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            border-left: 4px solid #4CAF50;
+        }
+        .error {
+            border-left: 4px solid #f44336;
+        }
+        .info {
+            border-left: 4px solid #2196F3;
+        }
+        .warning {
+            border-left: 4px solid #FF9800;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Diagnostic Supabase - LA VOP</h1>
+        
+        <div class="test-section">
+            <h3>🔗 Test de Connexion de Base</h3>
+            <button class="test-button" onclick="testConnection()">Tester la Connexion</button>
+            <div id="connectionResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Test d'Authentification</h3>
+            <button class="test-button" onclick="testAuth()">Tester l'Auth</button>
+            <div id="authResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Test des Tables avec Détails</h3>
+            <button class="test-button" onclick="testTablesDetailed()">Test Détaillé</button>
+            <div id="tablesResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🤖 Test VOP AI avec Gestion d'Erreurs</h3>
+            <button class="test-button" onclick="testVOPAI()">Test VOP AI</button>
+            <div id="vopaiResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📋 Instructions de Correction</h3>
+            <div class="result info">
+                <strong>🚨 Problème Identifié : Erreurs 500</strong>
+
+                <div class="code-block">
+<strong>Solution 1 - Exécuter le script SQL simplifié :</strong>
+
+1. Allez dans Supabase Dashboard
+2. Cliquez sur "SQL Editor"
+3. Copiez et exécutez le contenu de : database/schema-vop-ai-simple.sql
+
+<strong>Solution 2 - Vérifier les permissions :</strong>
+
+1. Allez dans "Authentication" > "Policies"
+2. Vérifiez que les tables ont des politiques RLS
+3. Si nécessaire, désactivez temporairement RLS
+
+<strong>Solution 3 - Test de base :</strong>
+
+Exécutez cette requête simple dans SQL Editor :
+SELECT * FROM information_schema.tables WHERE table_schema = 'public';
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration Supabase
+        const SUPABASE_URL = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `result ${type}`;
+            element.textContent = message;
+        }
+
+        async function testConnection() {
+            showResult('connectionResult', '🔄 Test de connexion en cours...', 'info');
+            
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/`, {
+                    method: 'GET',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = {
+                    status: response.status,
+                    statusText: response.statusText,
+                    ok: response.ok,
+                    headers: Object.fromEntries(response.headers.entries())
+                };
+                
+                if (response.ok) {
+                    showResult('connectionResult', `✅ Connexion réussie!\n\nDétails:\n${JSON.stringify(result, null, 2)}`, 'success');
+                } else {
+                    showResult('connectionResult', `❌ Erreur de connexion:\n${JSON.stringify(result, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                showResult('connectionResult', `❌ Erreur réseau:\n${error.message}\n\nVérifiez votre connexion internet.`, 'error');
+            }
+        }
+
+        async function testAuth() {
+            showResult('authResult', '🔄 Test d\'authentification...', 'info');
+            
+            try {
+                // Test simple sans authentification
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY
+                    }
+                });
+                
+                if (response.ok) {
+                    showResult('authResult', '✅ Clé API valide!\n\nL\'authentification de base fonctionne.', 'success');
+                } else {
+                    showResult('authResult', `❌ Problème d'authentification:\nStatus: ${response.status}\nMessage: ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                showResult('authResult', `❌ Erreur d'authentification:\n${error.message}`, 'error');
+            }
+        }
+
+        async function testTablesDetailed() {
+            showResult('tablesResult', '🔄 Test détaillé des tables...', 'info');
+            
+            const tables = ['articles', 'users', 'contacts', 'notifications', 'analytics'];
+            let results = [];
+            
+            for (const table of tables) {
+                try {
+                    // Test avec select simple
+                    const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*&limit=1`, {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const responseText = await response.text();
+                    
+                    if (response.ok) {
+                        results.push(`✅ ${table} - OK (${response.status})`);
+                    } else {
+                        results.push(`❌ ${table} - Erreur ${response.status}: ${responseText.substring(0, 200)}`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${table} - Exception: ${error.message}`);
+                }
+            }
+            
+            showResult('tablesResult', `📊 Résultats détaillés:\n${results.join('\n')}`, 'warning');
+        }
+
+        async function testVOPAI() {
+            showResult('vopaiResult', '🔄 Test VOP AI avec gestion d\'erreurs...', 'info');
+            
+            const vopaiTables = ['ai_conversations', 'ai_knowledge', 'ai_sessions', 'ai_feedback'];
+            let results = [];
+            
+            for (const table of vopaiTables) {
+                try {
+                    const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=count`, {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const responseText = await response.text();
+                    
+                    if (response.ok) {
+                        results.push(`✅ ${table} - Table accessible`);
+                    } else if (response.status === 404) {
+                        results.push(`⚠️ ${table} - Table non trouvée (404)`);
+                    } else if (response.status === 500) {
+                        results.push(`❌ ${table} - Erreur serveur (500): ${responseText.substring(0, 100)}`);
+                    } else {
+                        results.push(`❌ ${table} - Erreur ${response.status}: ${responseText.substring(0, 100)}`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${table} - Exception: ${error.message}`);
+                }
+            }
+            
+            const hasErrors = results.some(r => r.includes('❌'));
+            const hasWarnings = results.some(r => r.includes('⚠️'));
+            
+            let resultType = 'success';
+            if (hasErrors) resultType = 'error';
+            else if (hasWarnings) resultType = 'warning';
+            
+            showResult('vopaiResult', `🤖 Test VOP AI:\n${results.join('\n')}\n\n${hasErrors ? '❌ Des erreurs ont été détectées. Exécutez le script SQL simplifié.' : '✅ VOP AI est prêt!'}`, resultType);
+        }
+
+        // Message d'information au chargement
+        window.onload = function() {
+            showResult('connectionResult', '🚀 Diagnostic Supabase Ready!\n\nCliquez sur "Tester la Connexion" pour commencer le diagnostic.', 'info');
+        };
+    </script>
+</body>
+</html>

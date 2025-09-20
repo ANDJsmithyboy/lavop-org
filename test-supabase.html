@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase - La VOP</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Test de Connexion Supabase</h1>
+    <div id="results"></div>
+
+    <script>
+        const supabaseUrl = 'https://zfekgfupuzpnuixaqrsd.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmZWtnZnVwdXpwbnVpeGFxcnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzMjQ1NDksImV4cCI6MjA3MzkwMDU0OX0.UF06Fiz4pw5N8MEnOlzrZynzyuwQTMMNLckwDBkgr3k';
+        
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        
+        async function testConnection() {
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                resultsDiv.innerHTML = '<p>🔍 Test de connexion en cours...</p>';
+                
+                // Test 1: Connexion de base
+                const { data: users, error: usersError } = await supabase
+                    .from('users')
+                    .select('name, email, role, status');
+                
+                if (usersError) {
+                    resultsDiv.innerHTML += `<p>❌ Erreur: ${usersError.message}</p>`;
+                    return;
+                }
+                
+                resultsDiv.innerHTML += '<p>✅ Connexion réussie !</p>';
+                resultsDiv.innerHTML += '<p>👥 Utilisateurs trouvés:</p>';
+                resultsDiv.innerHTML += '<ul>';
+                users.forEach(user => {
+                    resultsDiv.innerHTML += `<li>${user.name} (${user.email}) - ${user.role} - ${user.status}</li>`;
+                });
+                resultsDiv.innerHTML += '</ul>';
+                
+                // Test 2: Vérifier les analytics
+                const { data: analytics, error: analyticsError } = await supabase
+                    .from('analytics')
+                    .select('*')
+                    .limit(1);
+                
+                if (analyticsError) {
+                    resultsDiv.innerHTML += `<p>❌ Erreur analytics: ${analyticsError.message}</p>`;
+                } else {
+                    resultsDiv.innerHTML += '<p>📊 Analytics trouvés:</p>';
+                    if (analytics.length > 0) {
+                        const stats = analytics[0];
+                        resultsDiv.innerHTML += `<ul>
+                            <li>Vues totales: ${stats.total_views}</li>
+                            <li>Articles: ${stats.total_articles}</li>
+                            <li>Utilisateurs: ${stats.total_users}</li>
+                            <li>Dons: ${stats.total_donations} FCFA</li>
+                        </ul>`;
+                    }
+                }
+                
+                resultsDiv.innerHTML += '<p>🎉 Test terminé avec succès !</p>';
+                
+            } catch (err) {
+                resultsDiv.innerHTML += `<p>❌ Erreur générale: ${err.message}</p>`;
+                resultsDiv.innerHTML += '<p>🔧 Solutions possibles:</p>';
+                resultsDiv.innerHTML += '<ul>';
+                resultsDiv.innerHTML += '<li>Vérifiez que le projet Supabase est actif</li>';
+                resultsDiv.innerHTML += '<li>Vérifiez les clés API</li>';
+                resultsDiv.innerHTML += '<li>Exécutez le script SQL dans Supabase</li>';
+                resultsDiv.innerHTML += '</ul>';
+            }
+        }
+        
+        // Lancer le test au chargement de la page
+        testConnection();
+    </script>
+</body>
+</html>

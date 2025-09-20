@@ -36,7 +36,10 @@ const HeroSection = () => {
               index === currentImageIndex ? 'opacity-100' : 'opacity-0'
             }`}
             style={{
-              backgroundImage: `linear-gradient(rgba(0, 51, 153, 0.7), rgba(0, 176, 240, 0.7)), url('${image}')`
+              backgroundImage: `linear-gradient(rgba(0, 51, 153, 0.7), rgba(0, 176, 240, 0.7)), url('${image}')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
+              backgroundAttachment: 'scroll'
             }}
           />
         ))}
@@ -44,10 +47,10 @@ const HeroSection = () => {
 
       {/* Background Pattern Overlay */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-20 left-20 w-32 h-32 bg-white rounded-full"></div>
-        <div className="absolute top-40 right-32 w-24 h-24 bg-[#FFD700] rounded-full"></div>
-        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-[#CC3366] rounded-full"></div>
-        <div className="absolute bottom-20 right-20 w-20 h-20 bg-white rounded-full"></div>
+        <div className="absolute top-10 left-10 sm:top-20 sm:left-20 w-16 h-16 sm:w-32 sm:h-32 bg-white rounded-full"></div>
+        <div className="absolute top-20 right-16 sm:top-40 sm:right-32 w-12 h-12 sm:w-24 sm:h-24 bg-[#FFD700] rounded-full"></div>
+        <div className="absolute bottom-20 left-1/4 sm:bottom-32 w-8 h-8 sm:w-16 sm:h-16 bg-[#CC3366] rounded-full"></div>
+        <div className="absolute bottom-10 right-10 sm:bottom-20 sm:right-20 w-10 h-10 sm:w-20 sm:h-20 bg-white rounded-full"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">

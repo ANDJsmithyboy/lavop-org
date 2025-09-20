@@ -78,6 +78,8 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 text-sm mb-4 md:mb-0">
               © 2025 La VOP. Tous droits réservés. (2019-2025)
+              <br />
+              <span className="text-[#FFD700] font-semibold">Prêt de 2025 - Expansion Internationale</span>
             </div>
             <div className="text-center md:text-right">
               <p className="text-[#66CCFF] text-sm italic font-medium">

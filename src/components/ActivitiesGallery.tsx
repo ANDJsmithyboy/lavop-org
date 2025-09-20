@@ -6,7 +6,7 @@ const ActivitiesGallery = () => {
       id: 1,
       title: "Sortie VOPyouth à l'Hôpital 2023",
       description: "Visite et soutien aux enfants hospitalisés",
-      image: "/src/assets/images/activities/1000151414.jpg",
+      image: "/images/activities/1000151414.jpg",
       date: "2023",
       location: "Libreville, Gabon",
       type: "VOPyouth"
@@ -15,7 +15,7 @@ const ActivitiesGallery = () => {
       id: 2,
       title: "Visite chez une Veuve",
       description: "Soutien et accompagnement des veuves dans le besoin",
-      image: "/src/assets/images/activities/1000151429.jpg",
+      image: "/images/activities/1000151429.jpg",
       date: "2024",
       location: "Libreville, Gabon",
       type: "Soutien Veuves"
@@ -24,7 +24,7 @@ const ActivitiesGallery = () => {
       id: 3,
       title: "Assemblée Générale VOP",
       description: "Réunion annuelle au siège de La VOP",
-      image: "/src/assets/images/activities/1000151368.jpg",
+      image: "/images/activities/1000151368.jpg",
       date: "2024",
       location: "Siège VOP, Libreville",
       type: "Assemblée"
@@ -33,7 +33,7 @@ const ActivitiesGallery = () => {
       id: 4,
       title: "Sortie avec les Enfants",
       description: "Moment de joie et de partage avec les enfants",
-      image: "/src/assets/images/activities/IMG-20250614-WA0099.jpg",
+      image: "/images/activities/IMG-20250614-WA0099.jpg",
       date: "2024",
       location: "Libreville, Gabon",
       type: "VOPyouth"
@@ -42,7 +42,7 @@ const ActivitiesGallery = () => {
       id: 5,
       title: "Sortie VOP 2025",
       description: "Enfants avec handicaps heureux lors de notre sortie",
-      image: "/src/assets/images/activities/IMG-20250614-WA0058.jpg",
+      image: "/images/activities/IMG-20250614-WA0058.jpg",
       date: "2025",
       location: "Libreville, Gabon",
       type: "Inclusion"
@@ -51,7 +51,7 @@ const ActivitiesGallery = () => {
       id: 6,
       title: "Équipe VOP en Action",
       description: "Secrétaire générale mondiale et fondateur avec une petite fille",
-      image: "/src/assets/images/activities/IMG-20250614-WA0079.jpg",
+      image: "/images/activities/IMG-20250614-WA0079.jpg",
       date: "2024",
       location: "Libreville, Gabon",
       type: "Équipe"

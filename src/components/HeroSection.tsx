@@ -7,11 +7,11 @@ const HeroSection = () => {
   
   // Images de fond qui défilent - Vraies images VOP
   const backgroundImages = [
-    "/src/assets/images/backgrounds/Dons de la VOP sortie .jpg",
-    "/src/assets/images/backgrounds/Dons de la vop mamie.jpg",
-    "/src/assets/images/backgrounds/Dons de la VOP .jpg",
-    "/src/assets/images/backgrounds/Donald VOP prêche .jpg",
-    "/src/assets/images/backgrounds/IMG-20250614-WA0064.jpg"
+    "/images/backgrounds/Dons de la VOP sortie .jpg",
+    "/images/backgrounds/Dons de la vop mamie.jpg",
+    "/images/backgrounds/Dons de la VOP .jpg",
+    "/images/backgrounds/Donald VOP prêche .jpg",
+    "/images/backgrounds/IMG-20250614-WA0064.jpg"
   ];
 
   // Rotation des images toutes les 4 secondes

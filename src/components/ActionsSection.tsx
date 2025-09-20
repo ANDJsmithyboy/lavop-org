@@ -6,7 +6,7 @@ const ActionsSection = () => {
       icon: Heart,
       title: "Dons aux Orphelinats de Libreville",
       description: "Soutien régulier aux orphelinats Bon Samaritain et Arc-en-ciel de Sainte-Marie avec dons en nature et en numéraire",
-      image: "/src/assets/images/activities/IMG-20250614-WA0058.jpg",
+      image: "/images/activities/IMG-20250614-WA0058.jpg",
       impact: "2 orphelinats soutenus",
       color: "text-[#CC3366]",
       bgColor: "bg-[#CC3366]"
@@ -15,7 +15,7 @@ const ActionsSection = () => {
       icon: Users,
       title: "Aide aux Veuves Locales",
       description: "Visites et soutien spirituel aux veuves de Libreville et des provinces. Aide ponctuelle selon les besoins urgents.",
-      image: "/src/assets/images/activities/1000151429.jpg",
+      image: "/images/activities/1000151429.jpg",
       impact: "Actions récurrentes depuis 2019",
       color: "text-[#66CCFF]",
       bgColor: "bg-[#66CCFF]"
@@ -24,7 +24,7 @@ const ActionsSection = () => {
       icon: GraduationCap,
       title: "VOP Youth - Mission Hospitalière",
       description: "Notre équipe de jeunes apporte réconfort et espoir aux patients de l'hôpital de Libreville",
-      image: "/src/assets/images/activities/1000151414.jpg",
+      image: "/images/activities/1000151414.jpg",
       impact: "Mission 2023 réalisée",
       color: "text-[#FFD700]",
       bgColor: "bg-[#FFD700]"
@@ -33,7 +33,7 @@ const ActionsSection = () => {
       icon: Globe,
       title: "Soutiens Financiers à l'Étranger",
       description: "Aides ponctuelles aux familles et contacts aux USA, Canada et autres pays selon les besoins identifiés",
-      image: "/src/assets/images/activities/IMG-20250614-WA0079.jpg",
+      image: "/images/activities/IMG-20250614-WA0079.jpg",
       impact: "Soutiens ponctuels internationaux",
       color: "text-[#00B0F0]",
       bgColor: "bg-[#00B0F0]"

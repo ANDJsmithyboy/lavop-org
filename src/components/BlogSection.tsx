@@ -9,7 +9,7 @@ const BlogSection = () => {
       author: "Équipe VOPyouth",
       date: "Décembre 2023",
       category: "VOPyouth",
-      image: "/src/assets/images/activities/1000151414.jpg",
+      image: "/images/activities/1000151414.jpg",
       readTime: "3 min",
       featured: true
     },
@@ -20,7 +20,7 @@ const BlogSection = () => {
       author: "ANDJ Daniel Jonathan",
       date: "Novembre 2024",
       category: "Soutien Veuves",
-      image: "/src/assets/images/activities/1000151429.jpg",
+      image: "/images/activities/1000151429.jpg",
       readTime: "2 min",
       featured: false
     },
@@ -31,7 +31,7 @@ const BlogSection = () => {
       author: "Équipe VOP",
       date: "Décembre 2024",
       category: "Assemblée",
-      image: "/src/assets/images/activities/1000151368.jpg",
+      image: "/images/activities/1000151368.jpg",
       readTime: "4 min",
       featured: false
     }

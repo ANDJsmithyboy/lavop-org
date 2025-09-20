@@ -128,7 +128,7 @@ const VOPActionsSection = () => {
         <div className="mb-16">
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                  <img
-                   src="/src/assets/images/activities/IMG-20250614-WA0079.jpg"
+                   src="/images/activities/IMG-20250614-WA0079.jpg"
                    alt="Secrétaire générale mondiale de la VOP Émilie et fondateur Daniel Jonathan ANDJ avec une petite fille lors d'une sortie de la VOP"
                    className="w-full h-64 md:h-80 lg:h-96 object-cover"
                  />

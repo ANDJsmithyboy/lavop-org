@@ -32,7 +32,7 @@ const OptimizedLogo = ({ className = "h-14 w-auto", alt = "Logo de la VOP", prio
   return (
     <div className={`${className} relative`}>
       <img
-        src="/src/assets/Logo de la VOP en français .jpg"
+        src="/logo-vop.jpg"
         alt={alt}
         className={`w-full h-full object-contain transition-opacity duration-300 ${
           logoLoaded || !priority ? 'opacity-100' : 'opacity-0'

@@ -28,7 +28,7 @@ const StoreSection = () => {
       originalPrice: "25€",
       category: "livres",
       type: "Système de Coaching Interactif",
-      image: "/src/assets/images/boutique/couverture_comment_investir_dans_ces_temps_de_la_fin.jpg",
+      image: "/images/boutique/couverture_comment_investir_dans_ces_temps_de_la_fin.jpg",
       rating: 5,
       bestseller: true,
       description: "Ce n'est pas un livre à lire, c'est un système à VIVRE. Coaching interactif de plus de 12 chapitres avec workbook actif, secrets bibliques dévoilés et modes d'emploi interactifs pour maîtriser les finances modernes (IA, Crypto, Trading) sans jamais perdre votre âme.",
@@ -49,15 +49,15 @@ const StoreSection = () => {
       price: "38,95€",
       category: "vetements",
       type: "Tee-shirt Officiel",
-      image: "/src/assets/images/boutique/202509191201220_Imageface.jpeg",
+      image: "/images/boutique/202509191201220_Imageface.jpeg",
       rating: 5,
       colors: ["Bleu", "Blanc", "Noir"],
       url: "https://www.contrado.fr/stores/vop-shop/vop-t-shirt-2586577",
       is3D: true,
       images: {
-        front: "/src/assets/images/boutique/202509191201220_Imageface.jpeg",
-        left: "/src/assets/images/boutique/202509191201222_Imagegauche.jpeg",
-        right: "/src/assets/images/boutique/202509191201223_Imagedroit.jpeg"
+        front: "/images/boutique/202509191201220_Imageface.jpeg",
+        left: "/images/boutique/202509191201222_Imagegauche.jpeg",
+        right: "/images/boutique/202509191201223_Imagedroit.jpeg"
       },
       contradoUrl: "https://www.contrado.fr/stores/vop-shop/vop-t-shirt-2586577",
       description: "Tee-shirt officiel VOP avec logo principal. Design classique et élégant pour tous."
@@ -69,7 +69,7 @@ const StoreSection = () => {
       price: "7,99€",
       category: "livres",
       type: "E-book ePub",
-      image: "/src/assets/images/boutique/chretien_est_tu_un_lion_ou_une_brebis_styve.webp",
+      image: "/images/boutique/chretien_est_tu_un_lion_ou_une_brebis_styve.webp",
       rating: 5,
       bestseller: true,
       description: "Manuel pour découvrir votre identité réelle en Christ. Un livre qui révolutionnera votre compréhension de l'amour de Dieu et de votre identité en tant qu'enfant de Dieu.",
@@ -84,7 +84,7 @@ const StoreSection = () => {
       price: "",
       category: "numerique",
       type: "Livre numérique (À paraître)",
-      image: "/src/assets/images/boutique/la_prophetie_du_bitcoin.png",
+      image: "/images/boutique/la_prophetie_du_bitcoin.png",
       rating: 5,
       downloadable: true,
       comingSoon: true,
@@ -98,7 +98,7 @@ const StoreSection = () => {
       price: "Sur mesure",
       category: "vetements",
       type: "Tenue sur mesure",
-      image: "/src/assets/images/boutique/1000151339.jpg",
+      image: "/images/boutique/1000151339.jpg",
       rating: 5,
       downloadable: false,
       comingSoon: false,
@@ -113,7 +113,7 @@ const StoreSection = () => {
       price: "Sur mesure",
       category: "vetements",
       type: "Tenue sur mesure",
-      image: "/src/assets/images/boutique/1000151338.jpg",
+      image: "/images/boutique/1000151338.jpg",
       rating: 5,
       downloadable: false,
       comingSoon: false,
@@ -128,15 +128,15 @@ const StoreSection = () => {
           price: "38,95€",
           category: "vetements",
           type: "Tee-shirt Jeunesse",
-          image: "/src/assets/images/boutique/202509191202321_ImageFiles.jpeg",
+          image: "/images/boutique/202509191202321_ImageFiles.jpeg",
           rating: 5,
           trending: true,
           url: "https://www.contrado.fr/stores/vop-shop/vopyouth-t-shirt-2586607",
           is3D: true,
           images: {
-            front: "/src/assets/images/boutique/202509191202321_ImageFiles.jpeg",
-            left: "/src/assets/images/boutique/202509191202321_ImageFiles.jpeg",
-            right: "/src/assets/images/boutique/202509191202321_ImageFiles.jpeg"
+            front: "/images/boutique/202509191202321_ImageFiles.jpeg",
+            left: "/images/boutique/202509191202321_ImageFiles.jpeg",
+            right: "/images/boutique/202509191202321_ImageFiles.jpeg"
           },
           contradoUrl: "https://www.contrado.fr/stores/vop-shop/vopyouth-t-shirt-2586607",
           description: "Tee-shirt VOPyouth avec design moderne et confortable. Parfait pour la jeunesse engagée."
@@ -148,15 +148,15 @@ const StoreSection = () => {
           price: "38,95€",
           category: "vetements",
           type: "Tee-shirt Musical",
-          image: "/src/assets/images/boutique/202509191202271_ImageFiles.jpeg",
+          image: "/images/boutique/202509191202271_ImageFiles.jpeg",
           rating: 5,
           bundle: false,
           url: "https://www.contrado.fr/stores/vop-shop/vopsongmusic-t-shirt-2586610",
           is3D: true,
           images: {
-            front: "/src/assets/images/boutique/202509191202271_ImageFiles.jpeg",
-            left: "/src/assets/images/boutique/202509191202272_ImageFiles.jpeg",
-            right: "/src/assets/images/boutique/202509191202271_ImageFiles.jpeg"
+            front: "/images/boutique/202509191202271_ImageFiles.jpeg",
+            left: "/images/boutique/202509191202272_ImageFiles.jpeg",
+            right: "/images/boutique/202509191202271_ImageFiles.jpeg"
           },
           contradoUrl: "https://www.contrado.fr/stores/vop-shop/vopsongmusic-t-shirt-2586610",
           description: "Tee-shirt VOPsong Music avec design musical unique. Pour les amateurs de musique chrétienne."
@@ -168,15 +168,15 @@ const StoreSection = () => {
           price: "38,95€",
           category: "vetements",
           type: "Tee-shirt Officiel",
-          image: "/src/assets/images/boutique/202509191201220_Imageface.jpeg",
+          image: "/images/boutique/202509191201220_Imageface.jpeg",
           rating: 5,
           trending: true,
           url: "https://www.contrado.fr/stores/vop-shop/vop-t-shirt-2586577",
           is3D: true,
           images: {
-            front: "/src/assets/images/boutique/202509191201220_Imageface.jpeg",
-            left: "/src/assets/images/boutique/202509191201222_Imagegauche.jpeg",
-            right: "/src/assets/images/boutique/202509191201223_Imagedroit.jpeg"
+            front: "/images/boutique/202509191201220_Imageface.jpeg",
+            left: "/images/boutique/202509191201222_Imagegauche.jpeg",
+            right: "/images/boutique/202509191201223_Imagedroit.jpeg"
           },
           contradoUrl: "https://www.contrado.fr/stores/vop-shop/vop-t-shirt-2586577",
           description: "Tee-shirt officiel VOP avec logo principal. Design classique et élégant pour tous."
@@ -202,7 +202,7 @@ const StoreSection = () => {
       price: "",
       category: "numerique",
       type: "PDF + ePub (À paraître)",
-      image: "/src/assets/images/boutique/l'algorithme_du_ciel.png",
+      image: "/images/boutique/l'algorithme_du_ciel.png",
       rating: 5,
       downloadable: true,
       comingSoon: true,
@@ -219,10 +219,10 @@ const StoreSection = () => {
     <section id="boutique" className="py-20 relative bg-gradient-to-br from-amber-50 to-orange-100">
       {/* Background Images Slider */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('/src/assets/images/boutique/ChatGPT Image 19 sept. 2025, 18_39_02.png')] bg-cover bg-center opacity-30"></div>
+        <div className="absolute inset-0 bg-[url('/images/boutique/ChatGPT Image 19 sept. 2025, 18_39_02.png')] bg-cover bg-center opacity-30"></div>
         <div className="absolute inset-0 bg-[url('/src/assets/images/logos/Logo de la VOPsong music .jpg')] bg-cover bg-center opacity-25"></div>
         <div className="absolute inset-0 bg-[url('/src/assets/images/logos/Logo de la VOPyouth.jpg')] bg-cover bg-center opacity-25"></div>
-        <div className="absolute inset-0 bg-[url('/src/assets/images/boutique/ChatGPT Image 19 sept. 2025, 18_39_13.png')] bg-cover bg-center opacity-30"></div>
+        <div className="absolute inset-0 bg-[url('/images/boutique/ChatGPT Image 19 sept. 2025, 18_39_13.png')] bg-cover bg-center opacity-30"></div>
       </div>
       <div className="absolute inset-0 bg-white/40"></div>
       <div className="container mx-auto px-4 relative z-10">

@@ -38,7 +38,7 @@ const LoginPage = () => {
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-6">
             <div className="mb-4">
               <img 
-                src="/src/assets/images/logos/Logo de la VOP en français .jpg" 
+                src="/logo-vop.jpg" 
                 alt="Logo LA VOP"
                 className="w-20 h-20 mx-auto rounded-full shadow-lg object-cover"
                 onError={(e) => {

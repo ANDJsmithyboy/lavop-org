@@ -23,7 +23,7 @@ export const login = (email: string, password: string): AuthUser | null => {
       password: "ANDJ&laVOP171222$",
       role: "Admin",
       permissions: ["read", "write", "delete", "admin", "moderate", "manage_users"],
-      avatar: "/src/assets/images/founder/photo_andj_ceo.jpg"
+      avatar: "/images/founder/photo_andj_ceo.jpg"
     },
     {
       id: 2,

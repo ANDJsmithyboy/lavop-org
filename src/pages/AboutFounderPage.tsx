@@ -17,8 +17,8 @@ const AboutFounderPage = () => {
     age: "23 ans",
     nationality: "Gabonaise",
     languages: ["Français", "Anglais", "Espagnol"],
-    avatar: "/src/assets/images/founder/photo_andj_ceo.jpg",
-    coverImage: "/src/assets/images/activities/IMG-20250614-WA0079.jpg"
+    avatar: "/images/founder/photo_andj_ceo.jpg",
+    coverImage: "/images/activities/IMG-20250614-WA0079.jpg"
   };
 
   const achievements = [
@@ -27,28 +27,28 @@ const AboutFounderPage = () => {
       title: "Fondateur de LA VOP",
       description: "6 années d'engagement - 20+ orphelinats soutenus - 12+ pays étrangers touchés",
       year: "2019",
-      backgroundImage: "/src/assets/images/logos/Logo de la VOP en français .jpg"
+      backgroundImage: "/images/logos/Logo de la VOP en français .jpg"
     },
     {
       icon: Globe,
       title: "PDG de SmartANDJ AI Technologies",
       description: "Startup d'IA fondée le 19 avril 2024, développant des solutions pour l'Afrique ET A COMMENCÉ L'ENTREPRENARIAT À L'ÂGE DE 16 ans (7 ans d'expérience)",
       year: "2024",
-      backgroundImage: "/src/assets/images/logos/Mon_logoSamartandj.PNG"
+      backgroundImage: "/images/logos/Mon_logoSamartandj.PNG"
     },
     {
       icon: Book,
       title: "Étudiant en IA & Objets Connectés",
       description: "Licence en Intelligence Artificielle, ambition Doctorat, inspiré par Andrew Ng",
       year: "2022",
-      backgroundImage: "/src/assets/images/logos/robotsmartandjia.png"
+      backgroundImage: "/images/logos/robotsmartandjia.png"
     },
     {
       icon: Users,
       title: "Prophète & Visionnaire",
       description: "Ministère apostolique et prophétique, appel divin manifesté dès l'enfance",
       year: "2019",
-      backgroundImage: "/src/assets/images/activities/IMG-20250614-WA0064.jpg"
+      backgroundImage: "/images/activities/IMG-20250614-WA0064.jpg"
     }
   ];
 
@@ -59,7 +59,7 @@ const AboutFounderPage = () => {
       description: "Système de coaching interactif de plus de 12 chapitres pour maîtriser les finances modernes (IA, Crypto, Trading) sans jamais perdre votre âme.",
       price: "10€",
       originalPrice: "25€",
-      image: "/src/assets/images/boutique/couverture_comment_investir_dans_ces_temps_de_la_fin.jpg",
+      image: "/images/boutique/couverture_comment_investir_dans_ces_temps_de_la_fin.jpg",
       link: "https://njunarse.mychariow.store/andjguidepratique",
       features: [
         "🧠 Coaching d'Intuition Intégré",
@@ -75,7 +75,7 @@ const AboutFounderPage = () => {
       description: "Guide complet sur la crypto-monnaie depuis son origine jusqu'à aujourd'hui, avec stratégies d'investissement étape par étape.",
       price: "",
       status: "À paraître",
-      image: "/src/assets/images/boutique/la_prophetie_du_bitcoin.png",
+      image: "/images/boutique/la_prophetie_du_bitcoin.png",
       features: [
         "📈 Analyser la technique avancée",
         "💰 Stratégies d'investissement",
@@ -90,7 +90,7 @@ const AboutFounderPage = () => {
       description: "Une exploration profonde et spirituelle de la personne de Jésus-Christ, mêlant foi, philosophie et recherche de vérité pour une compréhension moderne de l'Évangile.",
       price: "À paraître",
       originalPrice: "",
-      image: "/src/assets/images/boutique/paradoxe_de_l'existence.png",
+      image: "/images/boutique/paradoxe_de_l'existence.png",
       link: "#",
       features: [
         "🔍 Enquête spirituelle approfondie",
@@ -106,7 +106,7 @@ const AboutFounderPage = () => {
       description: "Découvrez les principes spirituels universels qui régissent notre existence, présentés comme un algorithme divin applicable à tous les aspects de la vie moderne.",
       price: "",
       originalPrice: "",
-      image: "/src/assets/images/boutique/l'algorithme_du_ciel.png",
+      image: "/images/boutique/l'algorithme_du_ciel.png",
       link: "#",
       status: "À paraître",
       features: [
@@ -126,7 +126,7 @@ const AboutFounderPage = () => {
       status: "En développement",
       icon: "🏥",
       color: "text-green-600",
-      backgroundImage: "/src/assets/images/activities/1000223126.jpg"
+      backgroundImage: "/images/activities/1000223126.jpg"
     },
     {
       title: "GabomaGPT",
@@ -134,7 +134,7 @@ const AboutFounderPage = () => {
       status: "Projet visionnaire",
       icon: "🤖",
       color: "text-blue-600",
-      backgroundImage: "/src/assets/images/logos/gabomagpt.png"
+      backgroundImage: "/images/logos/gabomagpt.png"
     }
   ];
 
@@ -538,7 +538,7 @@ const AboutFounderPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                 <div className="relative order-2 md:order-1">
                   <img 
-                    src="/src/assets/images/activities/leontine_photo.jpg" 
+                    src="/images/activities/leontine_photo.jpg" 
                     alt="Leontine - Collaboratrice VOP Gabon"
                     className="w-full h-80 md:h-full object-cover object-center"
                     loading="lazy"

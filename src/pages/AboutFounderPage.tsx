@@ -1,7 +1,8 @@
 import { 
   Heart, Globe, Book, Award, Users, Calendar, Mail, Phone, 
   MapPin, ExternalLink, Star, Quote, ChevronRight, Download,
-  Facebook, Twitter, Instagram, Youtube, Linkedin, Github, MessageCircle
+  Facebook, Twitter, Instagram, Youtube, Linkedin, Github, MessageCircle,
+  ArrowLeft
 } from 'lucide-react';
 import OptimizedFounderPhoto from '../components/OptimizedFounderPhoto';
 
@@ -169,6 +170,17 @@ const AboutFounderPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Bouton Retour */}
+      <div className="fixed top-4 left-4 z-50">
+        <button
+          onClick={() => window.history.back()}
+          className="flex items-center gap-2 bg-white/90 backdrop-blur-sm text-gray-700 px-4 py-2 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 border border-gray-200"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm font-medium">Retour</span>
+        </button>
+      </div>
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-[#003399] to-[#00B0F0] text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>

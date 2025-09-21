@@ -51,7 +51,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-[#00B0F0]" />
-                <span className="text-gray-300 text-sm">+241 74 79 15 30</span>
+                <a href="https://wa.me/24174791530?text=👋%20Bonjour%20!%20Je%20souhaite%20vous%20contacter%20pour%20plus%20d'informations%20sur%20LA%20VOP." target="_blank" rel="noopener noreferrer" className="text-gray-300 text-sm hover:text-[#66CCFF] transition-colors">+241 74 79 15 30</a>
               </div>
               
               {/* Social Media */}

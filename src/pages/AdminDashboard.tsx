@@ -15,6 +15,7 @@ import AIAssistant from '../components/AIAssistant';
 import SiteBuilder from '../components/SiteBuilder';
 import AdvancedEditor from '../components/AdvancedEditor';
 import OptimizedFounderPhoto from '../components/OptimizedFounderPhoto';
+import DashboardFallback from '../components/DashboardFallback';
 
 const contactReasons = [
   { value: 'general', label: 'Information générale' },
@@ -46,11 +47,33 @@ const AdminDashboard = () => {
   
   // Utilisation des hooks de base de données
   const {
-    articles,
-    users,
-    analytics,
-    notifications
+    articles: articlesData,
+    users: usersData,
+    analytics: analyticsData,
+    notifications: notificationsData
   } = useDashboard();
+
+  const articles = articlesData.articles;
+  const users = usersData.users;
+  const analytics = analyticsData.analytics;
+  const notifications = notificationsData.notifications;
+  const loading = articlesData.loading;
+
+  // Afficher le fallback si pas de données
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00B0F0] mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!loading && (!articles.length && !users.length)) {
+    return <DashboardFallback />;
+  }
 
   // PWA Installation
   useEffect(() => {

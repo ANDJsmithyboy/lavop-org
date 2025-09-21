@@ -41,7 +41,7 @@ const OptimizedLogo = ({ className = "h-14 w-auto", alt = "Logo de la VOP", prio
         onLoad={() => setLogoLoaded(true)}
         onError={() => setLogoError(true)}
         style={{
-          filter: 'brightness(0) invert(1)', // Pour le mode sombre
+          // Pas de filtre pour garder les couleurs originales
         }}
       />
       

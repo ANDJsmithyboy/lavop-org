@@ -1,4 +1,5 @@
 import { Calendar, User, ArrowRight, Heart, Users, Globe, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const BlogSection = () => {
   const articles = [
@@ -150,10 +151,13 @@ const BlogSection = () => {
                       </div>
                     </div>
                     
-                    <button className="flex items-center space-x-2 text-[#00B0F0] font-semibold hover:text-[#003399] transition-colors group">
+                    <Link 
+                      to={`/blog/article/${article.id}`}
+                      className="flex items-center space-x-2 text-[#00B0F0] font-semibold hover:text-[#003399] transition-colors group"
+                    >
                       <span>Lire l'article</span>
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -204,9 +208,12 @@ const BlogSection = () => {
                     <span className="text-sm font-semibold text-[#003399]">{article.author}</span>
                   </div>
                   
-                  <button className="text-[#00B0F0] hover:text-[#003399] transition-colors">
+                  <Link 
+                    to={`/blog/article/${article.id}`}
+                    className="text-[#00B0F0] hover:text-[#003399] transition-colors"
+                  >
                     <ArrowRight className="w-5 h-5" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -104,6 +104,11 @@ const Header = () => {
             </div>
           </div>
         )}
+        
+        {/* SEO Keywords - Hidden but effective */}
+        <div className="hidden">
+          <span>ANDJ Daniel Jonathan, SmartANDJ AI Technologies, VOP Youth, VOP Song, Medium, TikTok, LinkedIn, GitHub, entrepreneur, prophète, Gabon, Libreville, ONG, orphelins, veuves, coaching, investissement, crypto, Bitcoin, algorithme du ciel, maths de Dieu, coaching ultime, prophétie Bitcoin, paradoxe existence, chrétien lion brebis, formation WhatsApp, évangélisation, ministère apostolique, apôtre Styve Ntoutoume, apôtre David Oyedepo, intelligence artificielle, objets connectés, SanoAI Predict, GabomaGPT, startup, innovation technologique, transformation digitale, leadership chrétien, vision entrepreneuriale, impact social, développement durable, éducation, santé, technologie, innovation, startup gabonaise, entrepreneur gabonais, prophète entrepreneur, architecte du futur, SmartANDJ, VOP Technologies, LA VOP International, Christ pour la Veuve l'Orphelin le Pauvre, Toutes les Nations Internationales</span>
+        </div>
       </div>
     </header>
   );

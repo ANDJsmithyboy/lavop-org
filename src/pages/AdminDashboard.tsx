@@ -40,7 +40,6 @@ const AdminDashboard = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showPDFManager, setShowPDFManager] = useState(false);
   const [showArticleEditor, setShowArticleEditor] = useState(false);
-  const [editingArticle, setEditingArticle] = useState<any>(null);
   const [localArticles, setLocalArticles] = useState<any[]>([]);
   const [uploadedPDFs, setUploadedPDFs] = useState([
     { name: 'rapport-annuel-2023.pdf', url: '/rapport-annuel-2023.pdf', size: '2.1 MB' },

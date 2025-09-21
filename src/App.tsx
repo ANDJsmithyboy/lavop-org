@@ -7,6 +7,7 @@ import BlogPage from './pages/BlogPage';
 import TransparencePage from './pages/TransparencePage';
 import ImpactPage from './pages/ImpactPage';
 import AdminDashboard from './pages/AdminDashboard';
+import SimpleDashboard from './components/SimpleDashboard';
 import LoginPage from './pages/LoginPage';
 import AboutFounderPage from './pages/AboutFounderPage';
 import AboutPage from './pages/AboutPage';
@@ -14,6 +15,7 @@ import ThankYouPage from './pages/ThankYouPage';
 import BlogArticlePage from './pages/BlogArticlePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import ContactRedirect from './components/ContactRedirect';
+import DashboardTest from './components/DashboardTest';
 
 function App() {
   return (
@@ -37,10 +39,11 @@ function App() {
           path="/admin" 
           element={
             <ProtectedRoute>
-              <AdminDashboard />
+              <SimpleDashboard />
             </ProtectedRoute>
           } 
         />
+        <Route path="/admin-test" element={<DashboardTest />} />
       </Routes>
     </Router>
   );

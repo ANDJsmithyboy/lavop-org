@@ -34,38 +34,46 @@ const HeroSection = () => {
             key={index}
             className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
               index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+            } sm:bg-center md:bg-center lg:bg-center`}
             style={{
-              backgroundImage: `linear-gradient(rgba(0, 51, 153, 0.7), rgba(0, 176, 240, 0.7)), url('${image}')`,
+              backgroundImage: `linear-gradient(rgba(0, 51, 153, 0.8), rgba(0, 176, 240, 0.6)), url('${image}')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center center',
               backgroundAttachment: 'scroll',
               backgroundRepeat: 'no-repeat',
               minHeight: '100vh',
-              width: '100%'
+              width: '100%',
+              // Optimisation mobile
+              '@media (max-width: 768px)': {
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                minHeight: '100vh'
+              }
             }}
           />
         ))}
       </div>
 
-      {/* Background Pattern Overlay */}
+      {/* Background Pattern Overlay - TikTok Style */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-10 left-10 sm:top-20 sm:left-20 w-16 h-16 sm:w-32 sm:h-32 bg-white rounded-full"></div>
-        <div className="absolute top-20 right-16 sm:top-40 sm:right-32 w-12 h-12 sm:w-24 sm:h-24 bg-[#FFD700] rounded-full"></div>
-        <div className="absolute bottom-20 left-1/4 sm:bottom-32 w-8 h-8 sm:w-16 sm:h-16 bg-[#CC3366] rounded-full"></div>
-        <div className="absolute bottom-10 right-10 sm:bottom-20 sm:right-20 w-10 h-10 sm:w-20 sm:h-20 bg-white rounded-full"></div>
+        <div className="absolute top-10 left-10 sm:top-20 sm:left-20 w-16 h-16 sm:w-32 sm:h-32 bg-white rounded-full animate-pulse"></div>
+        <div className="absolute top-20 right-16 sm:top-40 sm:right-32 w-12 h-12 sm:w-24 sm:h-24 bg-[#FFD700] rounded-full animate-bounce"></div>
+        <div className="absolute bottom-20 left-1/4 sm:bottom-32 w-8 h-8 sm:w-16 sm:h-16 bg-[#CC3366] rounded-full animate-ping"></div>
+        <div className="absolute bottom-10 right-10 sm:bottom-20 sm:right-20 w-10 h-10 sm:w-20 sm:h-20 bg-white rounded-full animate-pulse"></div>
+        <div className="absolute top-1/2 left-10 w-6 h-6 bg-[#00B0F0] rounded-full animate-bounce"></div>
+        <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-[#FFD700] rounded-full animate-ping"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="text-white space-y-8">
+          <div className="text-white space-y-8 animate-fade-in-up">
             <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight animate-slide-in-left">
                 L'amour de Dieu
-                <span className="block text-[#FFD700]">en action</span>
+                <span className="block text-[#FFD700] animate-pulse">en action</span>
               </h1>
-              <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed max-w-2xl">
                 Jésus-Christ ressuscité, annoncé par les œuvres et la vérité. 
                 <span className="block font-semibold text-[#FFD700] mt-2">
                   Christ pour la Veuve, l'Orphelin et le Pauvre — à Libreville & en provinces
@@ -77,24 +85,24 @@ const HeroSection = () => {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <a 
                 href={UTM_LINKS.DON_LIBRE_HERO} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group bg-[#CC3366] hover:bg-[#FFD700] text-white hover:text-[#003399] px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-3"
+                className="group bg-[#CC3366] hover:bg-[#FFD700] text-white hover:text-[#003399] px-6 py-3 sm:px-8 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 sm:space-x-3"
               >
-                <Heart className="w-6 h-6 animate-pulse" fill="currentColor" />
+                <Heart className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" fill="currentColor" />
                 <span>Faire un don maintenant</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               
               <a 
                 href="#actions" 
-                className="group bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#003399] px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-3"
+                className="group bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#003399] px-6 py-3 sm:px-8 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3"
               >
                 <span>Découvrir nos actions</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
 

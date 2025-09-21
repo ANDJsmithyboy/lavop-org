@@ -17,15 +17,18 @@ const FounderVideoSection = () => {
           {/* Video Section */}
           <div className="relative">
             <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl">
-              <video 
-                className="w-full h-auto"
-                controls
-                poster="/images/founder/photo_andj_ceo.jpg"
-              >
-                <source src="/videos/1000151380.mp4" type="video/mp4" />
-                Votre navigateur ne supporte pas la lecture vidéo.
-              </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              {/* YouTube Video Embed */}
+              <div className="relative w-full h-0 pb-[56.25%]">
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube.com/embed/kFQCYR6tiTw?autoplay=0&mute=0&controls=1&rel=0&modestbranding=1"
+                  title="ANDJ Daniel Jonathan - Fondateur de LA VOP"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
             </div>
             
             {/* Video Stats */}

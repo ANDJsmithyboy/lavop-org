@@ -58,6 +58,7 @@ self.addEventListener('push', (event) => {
     icon: '/logo-vop.jpg',
     badge: '/logo-vop.jpg',
     vibrate: [100, 50, 100],
+    sound: '/sounds/notification.mp3',
     data: {
       dateOfArrival: Date.now(),
       primaryKey: 1
@@ -73,7 +74,9 @@ self.addEventListener('push', (event) => {
         title: 'Fermer',
         icon: '/logo-vop.jpg'
       }
-    ]
+    ],
+    requireInteraction: true, // Garde la notification visible
+    silent: false // Active le son
   };
 
   event.waitUntil(

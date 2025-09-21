@@ -97,9 +97,18 @@ const AdminDashboard = () => {
         new Notification('VOP Admin', {
           body: 'Notifications activées avec succès !',
           icon: '/logo-vop.jpg',
-          badge: '/logo-vop.jpg'
+          badge: '/logo-vop.jpg',
+          vibrate: [100, 50, 100],
+          sound: '/sounds/notification.mp3' // Son de notification
         });
+        
+        // Afficher un message de succès
+        alert('✅ Notifications activées ! Vous recevrez des alertes pour les nouvelles activités.');
+      } else if (permission === 'denied') {
+        alert('❌ Notifications refusées. Vous pouvez les activer dans les paramètres de votre navigateur.');
       }
+    } else {
+      alert('❌ Votre navigateur ne supporte pas les notifications.');
     }
   };
 
@@ -237,6 +246,26 @@ const AdminDashboard = () => {
                   title="Activer les Notifications"
                 >
                   <Bell className="w-5 h-5" />
+                </button>
+                
+                {/* Test Notification Button */}
+                <button
+                  onClick={() => {
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                      new Notification('VOP Admin - Test', {
+                        body: 'Ceci est un test de notification !',
+                        icon: '/logo-vop.jpg',
+                        badge: '/logo-vop.jpg',
+                        vibrate: [100, 50, 100]
+                      });
+                    } else {
+                      alert('Veuillez d\'abord activer les notifications !');
+                    }
+                  }}
+                  className="p-2 text-[#00B0F0] hover:text-[#003399] hover:bg-blue-100 rounded-lg transition-colors"
+                  title="Tester les Notifications"
+                >
+                  <MessageCircle className="w-5 h-5" />
                 </button>
                 
                 <a 

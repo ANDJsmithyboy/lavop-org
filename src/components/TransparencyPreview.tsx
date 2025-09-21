@@ -9,7 +9,7 @@ const TransparencyPreview = () => {
       year: "2023",
       pages: "45 pages",
       type: "PDF",
-      downloadUrl: "/src/assets/documents/rapport-annuel-2023.pdf"
+      downloadUrl: "/rapport-annuel-2023.pdf"
     },
     {
       title: "Rapport Financier 2023",
@@ -17,7 +17,7 @@ const TransparencyPreview = () => {
       year: "2023",
       pages: "28 pages",
       type: "PDF",
-      downloadUrl: "/src/assets/documents/rapport-financier-2023.pdf"
+      downloadUrl: "/rapport-financier-2023.pdf"
     }
   ];
 

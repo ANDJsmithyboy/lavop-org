@@ -7,7 +7,7 @@ const VOPVideosSection = () => {
       title: "Dons à l'Association Tous Différents",
       description: "Juin 2025 - Dons de l'ONG La VOP aux enfants handicapés. Mission d'amour et de compassion.",
       url: "https://www.tiktok.com/@christpourlavop/video/7516187714329382150",
-      thumbnail: "/src/assets/videos/1000102806.mp4", // Utilise la vidéo locale comme thumbnail
+      thumbnail: "/videos/1000102806.mp4", // Utilise la vidéo locale comme thumbnail
       hashtags: ["#gabontiktok🇬🇦", "#tousdifférents", "#donsvop"],
       music: "HOLY FOREVER (Instrumental) - Glorify & CHILLØUT",
       date: "Juin 2025"
@@ -17,7 +17,7 @@ const VOPVideosSection = () => {
       title: "Mission VOP - Ésaïe 1:17",
       description: "Apprenez à faire le bien, recherchez la justice, protégez l'opprimé. C'est le rôle de la VOP.",
       url: "https://www.tiktok.com/@christpourlavop/video/7243751317095730438",
-      thumbnail: "/src/assets/videos/1000102808.mp4", // Utilise la vidéo locale comme thumbnail
+      thumbnail: "/videos/1000102808.mp4", // Utilise la vidéo locale comme thumbnail
       hashtags: ["#amour", "#soldatsduchrist", "#missionvop"],
       music: "Citation biblique Ésaïe 1:17",
       date: "2024"
@@ -29,7 +29,7 @@ const VOPVideosSection = () => {
       id: 1,
       title: "Association Tous Différents - Dons VOP",
       description: "Moment de partage et de joie avec les enfants handicapés. L'amour de Dieu en action.",
-      video: "/src/assets/videos/1000102806.mp4",
+      video: "/videos/1000102806.mp4",
       duration: "2:30",
       category: "Dons & Actions"
     },
@@ -37,7 +37,7 @@ const VOPVideosSection = () => {
       id: 2,
       title: "Dons de la VOP en Action",
       description: "Démonstration concrète de l'amour de Dieu par les œuvres et la charité.",
-      video: "/src/assets/videos/1000102808.mp4",
+      video: "/videos/1000102808.mp4",
       duration: "1:45",
       category: "Impact Local"
     },
@@ -45,7 +45,7 @@ const VOPVideosSection = () => {
       id: 3,
       title: "ANDJ Daniel Jonathan - Fondateur VOP",
       description: "Message du fondateur et visionnaire de La VOP. Témoignage et vision pour l'avenir.",
-      video: "/src/assets/videos/1000151380.mp4",
+      video: "/videos/1000151380.mp4",
       duration: "3:20",
       category: "Leadership"
     }

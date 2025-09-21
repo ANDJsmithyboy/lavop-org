@@ -220,8 +220,8 @@ const StoreSection = () => {
       {/* Background Images Slider */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('/images/boutique/ChatGPT Image 19 sept. 2025, 18_39_02.png')] bg-cover bg-center opacity-30"></div>
-        <div className="absolute inset-0 bg-[url('/images/logos/Logo de la VOPsong music .jpg')] bg-cover bg-center opacity-25"></div>
-        <div className="absolute inset-0 bg-[url('/images/logos/Logo de la VOPyouth.jpg')] bg-cover bg-center opacity-25"></div>
+        <div className="absolute inset-0 bg-[url('/images/logos/logo-vop-song.jpg')] bg-cover bg-center opacity-25"></div>
+        <div className="absolute inset-0 bg-[url('/images/logos/logo-vop-youth.jpg')] bg-cover bg-center opacity-25"></div>
         <div className="absolute inset-0 bg-[url('/images/boutique/ChatGPT Image 19 sept. 2025, 18_39_13.png')] bg-cover bg-center opacity-30"></div>
       </div>
       <div className="absolute inset-0 bg-white/40"></div>

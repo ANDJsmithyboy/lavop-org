@@ -28,7 +28,7 @@ const AboutFounderPage = () => {
       title: "Fondateur de LA VOP",
       description: "6 années d'engagement - 20+ orphelinats soutenus - 12+ pays étrangers touchés",
       year: "2019",
-      backgroundImage: "/images/logos/Logo de la VOP en français .jpg"
+      backgroundImage: "/logo-vop.jpg"
     },
     {
       icon: Globe,

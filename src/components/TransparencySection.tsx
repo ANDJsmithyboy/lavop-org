@@ -7,7 +7,7 @@ const TransparencySection = () => {
       description: "Bilan complet de nos actions et impact financier",
       year: "2023",
       pages: "45 pages",
-      downloadUrl: "/src/assets/documents/rapport-annuel-2023.pdf",
+      downloadUrl: "/rapport-annuel-2023.pdf",
       type: "PDF"
     },
     {
@@ -15,7 +15,7 @@ const TransparencySection = () => {
       description: "Détail des revenus, dépenses et allocation des fonds",
       year: "2023",
       pages: "28 pages",
-      downloadUrl: "/src/assets/documents/rapport-financier-2023.pdf",
+      downloadUrl: "/rapport-financier-2023.pdf",
       type: "PDF"
     },
     {
@@ -152,7 +152,7 @@ const TransparencySection = () => {
             <div className="bg-white border border-gray-200 rounded-2xl p-8">
               <h3 className="text-xl font-bold text-[#003399] mb-6">Documents Légaux</h3>
               <div className="space-y-4">
-                <a href="/src/assets/documents/politique-confidentialite.pdf" download className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-[#00B0F0]/10 transition-colors">
+                <a href="/politique-confidentialite.pdf" download className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-[#00B0F0]/10 transition-colors">
                   <div>
                     <h4 className="font-semibold text-[#003399]">Politique de Confidentialité</h4>
                     <p className="text-gray-600 text-sm">Protection de vos données personnelles</p>
@@ -160,7 +160,7 @@ const TransparencySection = () => {
                   <Download className="w-5 h-5 text-[#00B0F0]" />
                 </a>
                 
-                <a href="/src/assets/documents/conditions-don.pdf" download className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-[#00B0F0]/10 transition-colors">
+                <a href="/conditions-don.pdf" download className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-[#00B0F0]/10 transition-colors">
                   <div>
                     <h4 className="font-semibold text-[#003399]">Conditions de Don</h4>
                     <p className="text-gray-600 text-sm">Règles et conditions pour les dons</p>

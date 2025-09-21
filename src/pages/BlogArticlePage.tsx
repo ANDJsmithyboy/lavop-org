@@ -71,7 +71,7 @@ const BlogArticlePage = () => {
       author: "Équipe VOP",
       date: "15 Juin 2025",
       category: "Actions Locales",
-      image: "/src/assets/images/activities/IMG-20250614-WA0058.jpg",
+      image: "/images/activities/IMG-20250614-WA0058.jpg",
       readTime: "5 min",
       featured: true
     },
@@ -136,7 +136,7 @@ const BlogArticlePage = () => {
       author: "ANDJ Daniel Jonathan",
       date: "7 Juillet 2025",
       category: "Dons & Impact",
-      image: "/src/assets/images/activities/IMG-20250614-WA0099.jpg",
+      image: "/images/activities/IMG-20250614-WA0099.jpg",
       readTime: "3 min",
       featured: false
     },
@@ -195,7 +195,7 @@ const BlogArticlePage = () => {
       author: "Équipe VOP Youth",
       date: "27 Mars 2025",
       category: "Jeunesse",
-      image: "/src/assets/images/activities/1000151414.jpg",
+      image: "/images/activities/1000151414.jpg",
       readTime: "4 min",
       featured: false
     }

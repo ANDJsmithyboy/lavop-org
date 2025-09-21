@@ -158,7 +158,7 @@ const HeroSection = () => {
               <h4 className="text-lg font-semibold text-white mb-4 text-center">Don rapide</h4>
               <div className="grid grid-cols-3 gap-3">
                 <a 
-                  href={UTM_LINKS.DON_5000_HERO} 
+                  href={UTM_LINKS.DON_LIBRE_SECTION} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-white/20 hover:bg-[#FFD700] text-white hover:text-[#003399] p-3 rounded-xl text-center font-semibold transition-all duration-300 transform hover:scale-105"
@@ -166,7 +166,7 @@ const HeroSection = () => {
                   5k FCFA
                 </a>
                 <a 
-                  href={UTM_LINKS.DON_10000_HERO} 
+                  href={UTM_LINKS.DON_LIBRE_SECTION} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-white/20 hover:bg-[#FFD700] text-white hover:text-[#003399] p-3 rounded-xl text-center font-semibold transition-all duration-300 transform hover:scale-105"
@@ -174,7 +174,7 @@ const HeroSection = () => {
                   10k FCFA
                 </a>
                 <a 
-                  href={UTM_LINKS.DON_25000_HERO} 
+                  href={UTM_LINKS.DON_LIBRE_SECTION} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-white/20 hover:bg-[#FFD700] text-white hover:text-[#003399] p-3 rounded-xl text-center font-semibold transition-all duration-300 transform hover:scale-105"

@@ -18,11 +18,11 @@ const DonationSection = () => {
 
   const predefinedAmounts = [5000, 10000, 25000];
 
-  // Utilisation des liens centralisés avec UTM
+  // Tous les boutons redirigent vers le montant libre
   const donationLinks: { [key: string]: string } = {
-    '5000': UTM_LINKS.DON_5000_HERO,
-    '10000': UTM_LINKS.DON_10000_HERO,
-    '25000': UTM_LINKS.DON_25000_HERO,
+    '5000': UTM_LINKS.DON_LIBRE_SECTION,
+    '10000': UTM_LINKS.DON_LIBRE_SECTION,
+    '25000': UTM_LINKS.DON_LIBRE_SECTION,
     'libre': UTM_LINKS.DON_LIBRE_SECTION
   };
 

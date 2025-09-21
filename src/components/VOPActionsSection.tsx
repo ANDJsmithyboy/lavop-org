@@ -1,42 +1,59 @@
 import { Play, Heart, Users, Award, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const VOPActionsSection = () => {
   const actions = [
     {
       id: 1,
-      title: "Association Tous Différents",
-      description: "Juin 2025 - Dons aux enfants handicapés. Mission d'amour et de compassion avec l'Association Tous Différents.",
+      title: "Dons aux Orphelinats de Libreville",
+      description: "Soutien régulier aux orphelinats Bon Samaritain et Arc-en-ciel de Sainte-Marie avec dons en nature et en numéraire",
       video: "/videos/1000102806.mp4",
       thumbnail: "/images/activities/1000151414.jpg",
-      tiktokUrl: "https://www.tiktok.com/@christpourlavop/video/7516187714329382150",
-      impact: "Enfants handicapés soutenus",
+      whatsappUrl: "https://wa.me/24174791530?text=💝%20SOUTIEN%20ORPHELINATS%20VOP%0A%0ABonjour%20!%20Je%20souhaite%20soutenir%20les%20orphelinats%20de%20Libreville.",
+      impact: "2 orphelinats soutenus",
       location: "Libreville, Gabon",
-      date: "Juin 2025",
-      hashtags: ["#tousdifférents", "#donsvop", "#gabontiktok🇬🇦"]
+      date: "Depuis 2019",
+      hashtags: ["#orphelinats", "#donsvop", "#libreville"],
+      detailUrl: "/actions/orphelinats-libreville"
     },
     {
       id: 2,
-      title: "Dons VOP en Action",
-      description: "Démonstration concrète de l'amour de Dieu par les œuvres et la charité. Citation Ésaïe 1:17 en pratique.",
+      title: "Aide aux Veuves Locales",
+      description: "Visites et soutien spirituel aux veuves de Libreville et des provinces. Aide ponctuelle selon les besoins urgents.",
       video: "/videos/1000102808.mp4",
-      thumbnail: "/images/activities/IMG-20250614-WA0058.jpg",
-      tiktokUrl: "https://www.tiktok.com/@christpourlavop/video/7243751317095730438",
-      impact: "Mission d'amour démontrée",
-      location: "Libreville, Gabon",
-      date: "2024",
-      hashtags: ["#amour", "#soldatsduchrist", "#missionvop"]
+      thumbnail: "/images/activities/1000151429.jpg",
+      whatsappUrl: "https://wa.me/24174791530?text=💝%20SOUTIEN%20VEUVES%20VOP%0A%0ABonjour%20!%20Je%20souhaite%20soutenir%20l'aide%20aux%20veuves%20locales.",
+      impact: "Actions récurrentes depuis 2019",
+      location: "Libreville et provinces",
+      date: "Depuis 2019",
+      hashtags: ["#veuves", "#soutien", "#compassion"],
+      detailUrl: "/actions/aide-veuves-locales"
     },
     {
       id: 3,
-      title: "Message du Fondateur",
-      description: "ANDJ Daniel Jonathan, fondateur et visionnaire de La VOP, partage sa vision et son témoignage.",
+      title: "VOP Youth - Mission Hospitalière",
+      description: "Notre équipe de jeunes apporte réconfort et espoir aux patients de l'hôpital de Libreville",
       video: "/videos/1000151380.mp4",
-      thumbnail: "/images/founder/photo_andj_ceo.jpg",
-      tiktokUrl: null,
-      impact: "Leadership et vision",
-      location: "Siège VOP, Libreville",
-      date: "2024",
-      hashtags: ["#fondateur", "#vision", "#leadership"]
+      thumbnail: "/images/activities/1000151414.jpg",
+      whatsappUrl: "https://wa.me/24174791530?text=💝%20SOUTIEN%20VOP%20YOUTH%0A%0ABonjour%20!%20Je%20souhaite%20soutenir%20les%20missions%20VOP%20Youth.",
+      impact: "Mission 2023 réalisée",
+      location: "Hôpital de Libreville",
+      date: "Mission 2023 réalisée",
+      hashtags: ["#vopyouth", "#hopital", "#jeunesse"],
+      detailUrl: "/actions/vop-youth-hopital"
+    },
+    {
+      id: 4,
+      title: "Soutiens Financiers à l'Étranger",
+      description: "Aides ponctuelles aux familles et contacts aux USA, Canada et autres pays selon les besoins identifiés",
+      video: "/videos/1000102806.mp4",
+      thumbnail: "/images/activities/IMG-20250614-WA0079.jpg",
+      whatsappUrl: "https://wa.me/24174791530?text=💝%20SOUTIEN%20INTERNATIONAL%20VOP%0A%0ABonjour%20!%20Je%20souhaite%20soutenir%20les%20aides%20internationales%20VOP.",
+      impact: "Soutiens ponctuels internationaux",
+      location: "USA, Canada, France",
+      date: "Soutiens ponctuels internationaux",
+      hashtags: ["#international", "#solidarite", "#familles"],
+      detailUrl: "/actions/soutiens-internationaux"
     }
   ];
 
@@ -46,10 +63,10 @@ const VOPActionsSection = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-[#003399] mb-4">
-            Équipe VOP en Action
+            Nos Actions Locales & Soutiens
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Secrétaire générale mondiale de la VOP Émilie et fondateur Daniel Jonathan ANDJ avec une petite fille lors d'une sortie de la VOP
+            Découvrez comment La VOP transforme des vies à Libreville et apporte son soutien à l'international
           </p>
         </div>
 
@@ -126,44 +143,67 @@ const VOPActionsSection = () => {
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   )}
-                  <button 
-                    onClick={() => {
-                      if (action.tiktokUrl) {
-                        // Partager le lien TikTok
-                        if (navigator.share) {
-                          navigator.share({
-                            title: action.title,
-                            text: action.description,
-                            url: action.tiktokUrl
-                          });
+                  <div className="flex space-x-3">
+                    <Link 
+                      to={action.detailUrl}
+                      className="flex items-center space-x-2 bg-[#003399] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#00B0F0] transition-colors text-sm"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>En savoir plus</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        if (action.whatsappUrl) {
+                          window.open(action.whatsappUrl, '_blank');
                         } else {
-                          // Fallback: copier le lien
-                          navigator.clipboard.writeText(action.tiktokUrl);
-                          alert('Lien TikTok copié !');
+                          // Partager le contenu général
+                          const shareText = `${action.title}\n\n${action.description}\n\n#LAVOP #ChristPourLaVOP`;
+                          if (navigator.share) {
+                            navigator.share({
+                              title: action.title,
+                              text: shareText
+                            });
+                          } else {
+                            navigator.clipboard.writeText(shareText);
+                            alert('Contenu copié !');
+                          }
                         }
-                      } else {
-                        // Partager le contenu général
-                        const shareText = `${action.title}\n\n${action.description}\n\n#LAVOP #ChristPourLaVOP`;
-                        if (navigator.share) {
-                          navigator.share({
-                            title: action.title,
-                            text: shareText
-                          });
-                        } else {
-                          navigator.clipboard.writeText(shareText);
-                          alert('Contenu copié !');
-                        }
-                      }
-                    }}
-                    className="flex items-center space-x-2 bg-[#00B0F0] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#003399] transition-colors text-sm"
-                  >
-                    <Heart className="w-4 h-4" />
-                    <span>Partager</span>
-                  </button>
+                      }}
+                      className="flex items-center space-x-2 bg-[#00B0F0] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#003399] transition-colors text-sm"
+                    >
+                      <Heart className="w-4 h-4" />
+                      <span>Soutenir</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Notre Impact Béton */}
+        <div className="mb-16">
+          <div className="bg-gradient-to-r from-[#003399] to-[#00B0F0] rounded-2xl p-8 text-white">
+            <h3 className="text-3xl font-bold mb-6 text-center">Notre Impact Béton</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">40+</div>
+                <div className="text-white/90">Enfants soutenus</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">12</div>
+                <div className="text-white/90">Veuves accompagnées</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">6</div>
+                <div className="text-white/90">Années d'action</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold mb-2">3</div>
+                <div className="text-white/90">Pays de soutien</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Équipe VOP Photo */}

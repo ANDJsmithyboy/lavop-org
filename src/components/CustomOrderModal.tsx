@@ -1,7 +1,5 @@
 import { useState, useRef } from 'react';
 import { X, Upload, Camera, FileImage, Send, CheckCircle, AlertCircle } from 'lucide-react';
-import { emailService } from '../utils/emailService';
-import { notificationService } from '../utils/notifications';
 
 interface CustomOrderModalProps {
   isOpen: boolean;
@@ -64,26 +62,40 @@ const CustomOrderModal = ({ isOpen, onClose }: CustomOrderModalProps) => {
         throw new Error('Veuillez remplir tous les champs obligatoires');
       }
 
-      // Préparer les données de la commande
-      const orderData = {
-        ...formData,
-        images: uploadedImages.map(file => ({
-          name: file.name,
-          size: file.size,
-          type: file.type
-        })),
-        orderDate: new Date().toISOString(),
-        orderType: 'Tenue Homme de DIEU Premium'
-      };
+      // Préparer le message WhatsApp
+      const measurements = `
+📏 MESURES:
+• Poitrine: ${formData.chestMeasurement}cm
+• Taille: ${formData.waistMeasurement}cm
+• Hanches: ${formData.hipMeasurement}cm
+• Largeur épaules: ${formData.shoulderWidth}cm
+• Longueur bras: ${formData.armLength}cm
+• Taille: ${formData.height}cm`;
 
-      // Envoyer l'email de notification
-      await emailService.sendCustomOrderNotification(orderData);
+      const additionalInfo = `
+📝 INFORMATIONS SUPPLÉMENTAIRES:
+• Modèle spécifique: ${formData.specificModel || 'Non spécifié'}
+• Couleurs préférées: ${formData.preferredColors || 'Non spécifié'}
+• Notes: ${formData.additionalNotes || 'Aucune'}`;
 
-      // Notification de succès
-      await notificationService.notifySystem(
-        `Nouvelle commande sur mesure reçue de ${formData.fullName}`,
-        'info'
-      );
+      const whatsappMessage = `🛍️ COMMANDE SUR MESURE - TENUE HOMME DE DIEU PREMIUM
+
+👤 CLIENT:
+• Nom: ${formData.fullName}
+• Email: ${formData.email}
+• Téléphone: ${formData.phone}
+
+${measurements}
+${additionalInfo}
+
+📧 Email professionnel: contact@lavop.org
+📱 WhatsApp: +241 74 79 15 30
+
+Merci pour votre commande ! Nous vous contacterons rapidement.`;
+
+      // Ouvrir WhatsApp avec le message
+      const whatsappUrl = `https://wa.me/24174791530?text=${encodeURIComponent(whatsappMessage)}`;
+      window.open(whatsappUrl, '_blank');
 
       setSubmitStatus('success');
       

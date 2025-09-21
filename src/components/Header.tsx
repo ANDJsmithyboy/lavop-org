@@ -9,7 +9,7 @@ const Header = () => {
 
   const navLinks = [
     { href: '/', text: 'Accueil' },
-    { href: '/#about', text: 'À propos' },
+    { href: '/a-propos', text: 'À propos' },
     { href: '/a-propos-fondateur', text: 'Le Fondateur' },
     { href: '/programmes', text: 'Programmes' },
     { href: '/boutique', text: 'Boutique' },

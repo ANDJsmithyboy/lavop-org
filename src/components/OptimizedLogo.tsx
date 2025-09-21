@@ -16,7 +16,7 @@ const OptimizedLogo = ({ className = "h-14 w-auto", alt = "Logo de la VOP", prio
       const img = new Image();
       img.onload = () => setLogoLoaded(true);
       img.onerror = () => setLogoError(true);
-      img.src = "/src/assets/Logo de la VOP en français .jpg";
+      img.src = "/logo-vop.jpg";
     }
   }, [priority]);
 

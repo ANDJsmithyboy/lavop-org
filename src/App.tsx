@@ -9,6 +9,7 @@ import ImpactPage from './pages/ImpactPage';
 import AdminDashboard from './pages/AdminDashboard';
 import LoginPage from './pages/LoginPage';
 import AboutFounderPage from './pages/AboutFounderPage';
+import AboutPage from './pages/AboutPage';
 import ThankYouPage from './pages/ThankYouPage';
 import BlogArticlePage from './pages/BlogArticlePage';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
+          <Route path="a-propos" element={<AboutPage />} />
           <Route path="boutique" element={<BoutiquePage />} />
           <Route path="programmes" element={<ProgrammesPage />} />
           <Route path="blog" element={<BlogPage />} />

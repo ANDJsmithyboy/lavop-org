@@ -7,44 +7,15 @@ import {
   Bold, Italic, Underline, Link, List, AlignLeft, AlignCenter, AlignRight,
   Type, Palette, Layout, Monitor, Tablet, Smartphone, Play, Pause, Volume2
 } from 'lucide-react';
+import ArticleEditor from './ArticleEditor';
+import { getArticles, saveArticle, deleteArticle, Article } from '../utils/articleSync';
 
 const ModernDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isEditing, setIsEditing] = useState(false);
   const [showArticleEditor, setShowArticleEditor] = useState(false);
   const [editingArticle, setEditingArticle] = useState<any>(null);
-  const [articles, setArticles] = useState([
-    {
-      id: 1,
-      title: "Sortie VOP 2025 : Joie et Espoir avec les Enfants Handicapés",
-      excerpt: "Le 15 juin 2025 restera gravé dans nos mémoires comme une journée exceptionnelle de partage et d'amour...",
-      content: "Contenu complet de l'article...",
-      author: "Équipe VOP",
-      date: "15 Juin 2025",
-      category: "Actions Locales",
-      image: "/images/activities/1000151414.jpg",
-      readTime: "5 min",
-      published: true,
-      views: 1250,
-      likes: 89,
-      comments: 23
-    },
-    {
-      id: 2,
-      title: "VOP Youth : Mission d'Espoir à l'Hôpital",
-      excerpt: "Notre équipe VOP Youth a apporté réconfort et espoir aux patients de l'hôpital de Libreville...",
-      content: "Contenu complet de l'article...",
-      author: "Équipe VOP Youth",
-      date: "27 Mars 2025",
-      category: "Jeunesse",
-      image: "/images/activities/1000151414.jpg",
-      readTime: "4 min",
-      published: true,
-      views: 980,
-      likes: 67,
-      comments: 15
-    }
-  ]);
+  const [articles, setArticles] = useState<Article[]>(getArticles());
 
   const [mediaFiles, setMediaFiles] = useState([
     {
@@ -142,49 +113,17 @@ const ModernDashboard = () => {
     setShowArticleEditor(true);
   };
 
-  const handleSaveArticle = (articleData: any) => {
-    // Récupérer les données du formulaire
-    const form = document.querySelector('#article-form') as HTMLFormElement;
-    if (!form) return;
-
-    const formData = new FormData(form);
-    const newArticleData = {
-      title: formData.get('title') as string,
-      excerpt: formData.get('excerpt') as string,
-      content: formData.get('content') as string,
-      category: formData.get('category') as string,
-      author: 'Équipe VOP',
-      date: new Date().toLocaleDateString('fr-FR', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      }),
-      readTime: '5 min',
-      image: '/images/activities/1000151414.jpg',
-      views: 0,
-      likes: 0,
-      comments: 0,
-      published: false
-    };
-
-    if (editingArticle) {
-      setArticles(prev => prev.map(article => 
-        article.id === editingArticle.id ? { ...article, ...newArticleData } : article
-      ));
-    } else {
-      const newArticle = {
-        ...newArticleData,
-        id: Date.now()
-      };
-      setArticles(prev => [...prev, newArticle]);
-    }
+  const handleSaveArticle = (articleData: Article) => {
+    saveArticle(articleData);
+    setArticles(getArticles());
     setShowArticleEditor(false);
     setEditingArticle(null);
   };
 
   const handleDeleteArticle = (articleId: number) => {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
-      setArticles(prev => prev.filter(article => article.id !== articleId));
+      deleteArticle(articleId);
+      setArticles(getArticles());
     }
   };
 

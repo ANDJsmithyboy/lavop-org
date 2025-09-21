@@ -1,113 +1,29 @@
 import { Calendar, User, ArrowRight, Heart, Users, Globe, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import NewsletterSignup from './NewsletterSignup';
+import { getPublishedArticles } from '../utils/articleSync';
 
 const BlogSection = () => {
-  const articles = [
-    {
-      id: 1,
-      title: "Sortie VOP 2025 : Joie et Espoir avec les Enfants Handicapés",
-      excerpt: "Le 15 juin 2025 restera gravé dans nos mémoires comme une journée exceptionnelle de partage et d'amour. Notre équipe VOP s'est rendue à l'Association Tous Différents de Libreville pour une mission spéciale dédiée aux enfants handicapés.",
-      author: "Équipe VOP",
-      date: "15 Juin 2025",
-      category: "Actions Locales",
-      image: "/images/activities/1000151414.jpg",
-      readTime: "5 min",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "VOP Youth : Mission d'Espoir à l'Hôpital de Libreville",
-      excerpt: "Notre équipe VOP Youth a apporté réconfort et espoir aux patients de l'hôpital de Libreville. Une mission touchante qui démontre l'amour de Dieu en action.",
-      author: "Équipe VOP Youth",
-      date: "27 Mars 2025",
-      category: "Jeunesse",
-      image: "/images/activities/1000151414.jpg",
-      readTime: "4 min",
-      featured: false
-    },
-    {
-      id: 3,
-      title: "Dons VOP : Impact Direct sur le Terrain",
-      excerpt: "Témoignages authentiques de nos actions de dons et de soutien aux familles dans le besoin. Chaque don fait la différence dans la vie des plus vulnérables.",
-      author: "ANDJ Daniel Jonathan",
-      date: "7 Juillet 2025",
-      category: "Dons & Impact",
-      image: "/images/activities/IMG-20250614-WA0058.jpg",
-      readTime: "3 min",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Visite chez une Veuve - Soutien Concret",
-      excerpt: "Accompagnement et soutien des veuves dans le besoin. Nos actions concrètes d'amour et de compassion envers les plus vulnérables de notre société.",
-      author: "ANDJ Daniel Jonathan",
-      date: "Novembre 2024",
-      category: "Soutien Veuves",
-      image: "/images/activities/1000151429.jpg",
-      readTime: "2 min",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Assemblée Générale VOP 2024 : Bilan et Perspectives",
-      excerpt: "Réunion annuelle au siège de La VOP à Libreville. Bilan des actions réalisées et perspectives ambitieuses pour l'année 2025.",
-      author: "Équipe VOP",
-      date: "Décembre 2024",
-      category: "Assemblée",
-      image: "/images/activities/1000151368.jpg",
-      readTime: "4 min",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "Formation Spirituelle VOP : Équipement des Leaders",
-      excerpt: "Programme de formation intensive pour les leaders de demain. Développement spirituel et leadership chrétien au service de la communauté.",
-      author: "Équipe Formation VOP",
-      date: "15 Janvier 2025",
-      category: "Formation",
-      image: "/images/activities/1000151368.jpg",
-      readTime: "6 min",
-      featured: false
-    },
-    {
-      id: 7,
-      title: "Mission Internationale : Soutien aux Familles à l'Étranger",
-      excerpt: "Nos actions de soutien financier aux familles gabonaises vivant à l'étranger. Solidarité internationale et entraide communautaire.",
-      author: "Équipe Internationale VOP",
-      date: "3 Février 2025",
-      category: "International",
-      image: "/images/activities/IMG-20250614-WA0079.jpg",
-      readTime: "3 min",
-      featured: false
-    },
-    {
-      id: 8,
-      title: "Témoignages de Transformation : Vies Changées par l'Amour",
-      excerpt: "Histoires inspirantes de vies transformées grâce à nos actions. Témoignages authentiques de l'impact de l'amour de Dieu dans la communauté.",
-      author: "Équipe Communication VOP",
-      date: "20 Février 2025",
-      category: "Témoignages",
-      image: "/images/activities/1000151414.jpg",
-      readTime: "5 min",
-      featured: false
-    }
-  ];
+  const articles = getPublishedArticles();
 
   const categories = [
-    { name: "Tous", count: 8, icon: BookOpen },
-    { name: "Actions Locales", count: 1, icon: Globe },
-    { name: "Jeunesse", count: 1, icon: Users },
-    { name: "Dons & Impact", count: 1, icon: Heart },
-    { name: "Soutien Veuves", count: 1, icon: Heart },
-    { name: "Assemblée", count: 1, icon: Globe },
-    { name: "Formation", count: 1, icon: BookOpen },
-    { name: "International", count: 1, icon: Globe },
-    { name: "Témoignages", count: 1, icon: Heart }
+    { name: "Tous", count: articles.length, icon: BookOpen },
+    ...Array.from(new Set(articles.map(article => article.category))).map(category => ({
+      name: category,
+      count: articles.filter(article => article.category === category).length,
+      icon: category === "Actions Locales" ? Globe : 
+            category === "Jeunesse" ? Users :
+            category === "Dons & Impact" ? Heart :
+            category === "Soutien Veuves" ? Heart :
+            category === "Assemblée" ? Globe :
+            category === "Formation" ? BookOpen :
+            category === "International" ? Globe :
+            Heart
+    }))
   ];
 
   const stats = [
-    { icon: BookOpen, value: "8+", label: "Articles publiés" },
+    { icon: BookOpen, value: `${articles.length}+`, label: "Articles publiés" },
     { icon: Users, value: "3K+", label: "Abonnés TikTok" },
     { icon: Globe, value: "3", label: "Pays de soutien" }
   ];

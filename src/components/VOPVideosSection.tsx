@@ -29,25 +29,31 @@ const VOPVideosSection = () => {
       id: 1,
       title: "Association Tous Différents - Dons VOP",
       description: "Moment de partage et de joie avec les enfants handicapés. L'amour de Dieu en action.",
-      video: "/videos/1000102806.mp4",
+      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      thumbnail: "/images/activities/1000151414.jpg",
       duration: "2:30",
-      category: "Dons & Actions"
+      category: "Dons & Actions",
+      tiktokUrl: "https://www.tiktok.com/@christpourlavop/video/7516187714329382150"
     },
     {
       id: 2,
       title: "Dons de la VOP en Action",
       description: "Démonstration concrète de l'amour de Dieu par les œuvres et la charité.",
-      video: "/videos/1000102808.mp4",
+      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      thumbnail: "/images/activities/IMG-20250614-WA0058.jpg",
       duration: "1:45",
-      category: "Impact Local"
+      category: "Impact Local",
+      tiktokUrl: "https://www.tiktok.com/@christpourlavop/video/7243751317095730438"
     },
     {
       id: 3,
       title: "ANDJ Daniel Jonathan - Fondateur VOP",
       description: "Message du fondateur et visionnaire de La VOP. Témoignage et vision pour l'avenir.",
-      video: "/videos/1000151380.mp4",
+      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      thumbnail: "/images/founder/photo_andj_ceo.jpg",
       duration: "3:20",
-      category: "Leadership"
+      category: "Leadership",
+      tiktokUrl: null
     }
   ];
 
@@ -115,22 +121,31 @@ const VOPVideosSection = () => {
               <div key={video.id} className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20">
                 {/* Video Player */}
                 <div className="relative">
-                  <video
-                    className="w-full h-48 object-cover"
-                    poster={video.video}
-                    controls
-                    preload="metadata"
-                  >
-                    <source src={video.video} type="video/mp4" />
-                    Votre navigateur ne supporte pas la lecture vidéo.
-                  </video>
-                  
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
-                      <Play className="w-8 h-8 text-white" />
-                    </div>
+                  <div className="relative w-full h-48 bg-gray-900 rounded-t-2xl overflow-hidden">
+                    <iframe
+                      className="w-full h-full"
+                      src={video.video}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
                   </div>
+                  
+                  {/* TikTok Link Overlay */}
+                  {video.tiktokUrl && (
+                    <div className="absolute top-2 right-2">
+                      <a
+                        href={video.tiktokUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-black/70 text-white px-3 py-1 rounded-full text-xs font-semibold hover:bg-black/90 transition-colors flex items-center space-x-1"
+                      >
+                        <span>🎵</span>
+                        <span>TikTok</span>
+                      </a>
+                    </div>
+                  )}
                   
                   {/* Duration Badge */}
                   <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -147,7 +162,57 @@ const VOPVideosSection = () => {
                   </div>
                   
                   <h4 className="text-lg font-bold mb-2">{video.title}</h4>
-                  <p className="text-white/90 text-sm leading-relaxed">{video.description}</p>
+                  <p className="text-white/90 text-sm leading-relaxed mb-4">{video.description}</p>
+                  
+                  {/* Action Buttons */}
+                  <div className="flex space-x-2">
+                    {video.tiktokUrl && (
+                      <a
+                        href={video.tiktokUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-1 bg-gradient-to-r from-[#FF0050] to-[#00F2EA] text-white px-3 py-2 rounded-full text-xs font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                      >
+                        <span>🎵</span>
+                        <span>TikTok</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                    <button 
+                      onClick={() => {
+                        if (video.tiktokUrl) {
+                          // Partager le lien TikTok
+                          if (navigator.share) {
+                            navigator.share({
+                              title: video.title,
+                              text: video.description,
+                              url: video.tiktokUrl
+                            });
+                          } else {
+                            // Fallback: copier le lien
+                            navigator.clipboard.writeText(video.tiktokUrl);
+                            alert('Lien TikTok copié !');
+                          }
+                        } else {
+                          // Partager le contenu général
+                          const shareText = `${video.title}\n\n${video.description}\n\n#LAVOP #ChristPourLaVOP`;
+                          if (navigator.share) {
+                            navigator.share({
+                              title: video.title,
+                              text: shareText
+                            });
+                          } else {
+                            navigator.clipboard.writeText(shareText);
+                            alert('Contenu copié !');
+                          }
+                        }
+                      }}
+                      className="flex items-center space-x-1 bg-white/20 text-white px-3 py-2 rounded-full text-xs font-semibold hover:bg-white/30 transition-colors"
+                    >
+                      <Heart className="w-3 h-3" />
+                      <span>Partager</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

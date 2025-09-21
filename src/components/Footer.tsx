@@ -36,7 +36,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="/#ministries" className="text-gray-300 hover:text-[#66CCFF] transition-colors">Jeunesse VOP</a></li>
               <li><a href="https://www.youtube.com/watch?v=kFQCYR6tiTw" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#66CCFF] transition-colors">Musique de chanson VOP</a></li>
-                    <li><a href="https://wa.me/24174791530" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#66CCFF] transition-colors">Formation (WhatsApp avec Daniel Jonathan, Évangéliste Styve et Prophète David SHEKINAH)</a></li>
+                    <li><a href="https://wa.me/24174791530?text=🎓%20FORMATION%20SPIRITUELLE%20-%20LA%20VOP%0A%0ABonjour%20!%20Je%20souhaite%20participer%20à%20la%20formation%20spirituelle%20avec%20:%0A%0A👨‍🏫%20FORMATEURS%20:%0A•%20ANDJ%20Daniel%20Jonathan%20(Fondateur%20LA%20VOP)%0A•%20Évangéliste%20Styve%20Ntoutoume%20%20%0A•%20Prophète%20David%20SHEKINAH%0A%0A📚%20TYPES%20DE%20FORMATION%20:%0A•%20Formation%20spirituelle%0A•%20Coaching%20personnel%0A•%20Prière%20et%20intercession%0A•%20Autre%20(précisez)%0A%0A📱%20Contactez-nous%20pour%20plus%20d'informations%20!%0A%0ALA%20VOP%20-%20Christ%20pour%20la%20Veuve,%20l'Orphelin,%20le%20Pauvre" target="_blank" rel="noopener noreferrer" className="text-[#FFD700] hover:text-[#FFA500] font-semibold transition-colors">Formation (WhatsApp avec Daniel Jonathan, Évangéliste Styve et Prophète David SHEKINAH)</a></li>
               <li><a href="/#actions" className="text-gray-300 hover:text-[#66CCFF] transition-colors">Évangélisation</a></li>
             </ul>
           </div>
@@ -47,7 +47,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-[#00B0F0]" />
-                <span className="text-gray-300 text-sm">contact@lavop.org</span>
+                <a href="mailto:christpourlavop@gmail.com" className="text-gray-300 text-sm hover:text-[#66CCFF] transition-colors">contact@lavop.org</a>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-[#00B0F0]" />

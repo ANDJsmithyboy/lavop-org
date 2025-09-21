@@ -104,7 +104,7 @@ const StoreSection = () => {
       comingSoon: false,
       customOrder: true,
       description: "Tenue premium pour homme de DIEU sur commande. Nous faisons sur mesure selon vos tailles et mesures. Si vous avez un modèle spécifique, donnez-nous le et nous le réaliserons avec devis et acompte.",
-      url: "mailto:contact@lavop.org?subject=Commande Tenue Premium"
+      url: "mailto:christpourlavop@gmail.com?subject=Commande Tenue Premium"
     },
     {
       id: 6,
@@ -119,7 +119,7 @@ const StoreSection = () => {
       comingSoon: false,
       customOrder: true,
       description: "Autre modèle de tenue premium pour homme de DIEU. Fabrication sur mesure avec vos spécifications personnalisées.",
-      url: "mailto:contact@lavop.org?subject=Commande Tenue Premium Modèle 2"
+      url: "mailto:christpourlavop@gmail.com?subject=Commande Tenue Premium Modèle 2"
     },
     {
       id: 7,

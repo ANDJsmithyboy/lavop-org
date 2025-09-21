@@ -290,7 +290,7 @@ const ThankYouPage = () => {
               </a>
               
               <a
-                href="mailto:contact@lavop.org"
+                href="mailto:christpourlavop@gmail.com"
                 className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-colors"
               >
                 <Mail className="w-12 h-12 text-blue-400 mx-auto mb-4" />

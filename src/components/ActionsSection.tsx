@@ -1,8 +1,10 @@
 import { Users, GraduationCap, Heart, Globe, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const ActionsSection = () => {
   const actions = [
     {
+      id: "orphelinats-libreville",
       icon: Heart,
       title: "Dons aux Orphelinats de Libreville",
       description: "Soutien régulier aux orphelinats Bon Samaritain et Arc-en-ciel de Sainte-Marie avec dons en nature et en numéraire",
@@ -12,6 +14,7 @@ const ActionsSection = () => {
       bgColor: "bg-[#CC3366]"
     },
     {
+      id: "aide-veuves-locales",
       icon: Users,
       title: "Aide aux Veuves Locales",
       description: "Visites et soutien spirituel aux veuves de Libreville et des provinces. Aide ponctuelle selon les besoins urgents.",
@@ -21,6 +24,7 @@ const ActionsSection = () => {
       bgColor: "bg-[#66CCFF]"
     },
     {
+      id: "vop-youth-hopital",
       icon: GraduationCap,
       title: "VOP Youth - Mission Hospitalière",
       description: "Notre équipe de jeunes apporte réconfort et espoir aux patients de l'hôpital de Libreville",
@@ -30,6 +34,7 @@ const ActionsSection = () => {
       bgColor: "bg-[#FFD700]"
     },
     {
+      id: "soutiens-etranger",
       icon: Globe,
       title: "Soutiens Financiers à l'Étranger",
       description: "Aides ponctuelles aux familles et contacts aux USA, Canada et autres pays selon les besoins identifiés",
@@ -92,13 +97,13 @@ const ActionsSection = () => {
                     {action.description}
                   </p>
                   
-                  <a 
-                    href={`#actions-${action.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  <Link 
+                    to={`/actions/${action.id}`}
                     className="flex items-center space-x-2 text-[#00B0F0] font-semibold hover:text-[#003399] transition-colors group"
                   >
                     <span>En savoir plus</span>
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             );

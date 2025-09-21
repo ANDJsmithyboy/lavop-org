@@ -7,7 +7,7 @@ import BlogPage from './pages/BlogPage';
 import TransparencePage from './pages/TransparencePage';
 import ImpactPage from './pages/ImpactPage';
 import AdminDashboard from './pages/AdminDashboard';
-import SimpleDashboard from './components/SimpleDashboard';
+import ModernDashboard from './components/ModernDashboard';
 import LoginPage from './pages/LoginPage';
 import AboutFounderPage from './pages/AboutFounderPage';
 import AboutPage from './pages/AboutPage';
@@ -16,6 +16,7 @@ import BlogArticlePage from './pages/BlogArticlePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import ContactRedirect from './components/ContactRedirect';
 import DashboardTest from './components/DashboardTest';
+import ActionsDetailPage from './pages/ActionsDetailPage';
 
 function App() {
   return (
@@ -34,12 +35,13 @@ function App() {
         <Route path="/a-propos-fondateur" element={<AboutFounderPage />} />
         <Route path="/merci" element={<ThankYouPage />} />
         <Route path="/blog/article/:id" element={<BlogArticlePage />} />
+        <Route path="/actions/:id" element={<ActionsDetailPage />} />
         <Route path="/contact" element={<ContactRedirect />} />
         <Route 
           path="/admin" 
           element={
             <ProtectedRoute>
-              <SimpleDashboard />
+              <ModernDashboard />
             </ProtectedRoute>
           } 
         />

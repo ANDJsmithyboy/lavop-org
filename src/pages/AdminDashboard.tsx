@@ -1,21 +1,37 @@
 import { useState, useEffect } from 'react';
 import { 
   Plus, Edit, Trash2, Save, X, Eye, FileText, Image, Video, Users, Settings, 
-  BarChart3, TrendingUp, Download, Upload, Search, Globe, DollarSign, Heart, 
-  Database, MessageCircle, LogOut, UserPlus, Bell, Home, Mail, Phone, 
-  Calendar, Clock, Star, Award, Target, Zap, Shield, Crown
+  BarChart3, TrendingUp, Download, Upload, Search,
+  Globe, DollarSign, Heart, Database, MessageCircle, LogOut, UserPlus, Bell,
+  Home, Mail, Phone, Calendar, Clock, Star, Award, Target, Zap, Shield, Crown
 } from 'lucide-react';
+import { useDashboard } from '../hooks/useDatabase';
+import { getCurrentUser, logout, canManageArticles, canDelete, hasPermission } from '../utils/auth';
+import UserInvitationModal from '../components/UserInvitationModal';
+import VideoManager from '../components/VideoManager';
+import NotificationCenter from '../components/NotificationCenter';
+import MobileSimulator from '../components/MobileSimulator';
+import MediumEditor from '../components/MediumEditor';
+import AIAssistant from '../components/AIAssistant';
+import SiteBuilder from '../components/SiteBuilder';
+import AdvancedEditor from '../components/AdvancedEditor';
+import OptimizedFounderPhoto from '../components/OptimizedFounderPhoto';
+import ArticleEditor from '../components/ArticleEditor';
 
-const AdminDashboardPro = () => {
+const contactReasons = [
+  { value: 'general', label: 'Information générale' },
+  { value: 'donation', label: 'Don ou partenariat' },
+  { value: 'volunteer', label: 'Bénévolat et engagement' },
+  { value: 'prayer', label: 'Demande de prière' },
+  { value: 'testimony', label: 'Partager un témoignage' },
+  { value: 'ministry', label: 'Rejoindre un ministère' }
+];
+
+const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isEditing, setIsEditing] = useState(false);
   const [editingArticle, setEditingArticle] = useState<any>(null);
-  const [currentUser] = useState({
-    name: "ANDJ Daniel Jonathan",
-    email: "jonathanakarentoutoume@gmail.com",
-    role: "Super Admin",
-    avatar: "/images/founder/photo_andj_ceo.jpg"
-  });
+  const [currentUser] = useState(getCurrentUser());
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showMobileSimulator, setShowMobileSimulator] = useState(false);
   const [showSiteBuilder, setShowSiteBuilder] = useState(false);
@@ -23,6 +39,9 @@ const AdminDashboardPro = () => {
   const [isPWAInstalled, setIsPWAInstalled] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showPDFManager, setShowPDFManager] = useState(false);
+  const [showArticleEditor, setShowArticleEditor] = useState(false);
+  const [editingArticle, setEditingArticle] = useState<any>(null);
+  const [localArticles, setLocalArticles] = useState<any[]>([]);
   const [uploadedPDFs, setUploadedPDFs] = useState([
     { name: 'rapport-annuel-2023.pdf', url: '/rapport-annuel-2023.pdf', size: '2.1 MB' },
     { name: 'rapport-financier-2023.pdf', url: '/rapport-financier-2023.pdf', size: '1.8 MB' },
@@ -30,90 +49,19 @@ const AdminDashboardPro = () => {
     { name: 'conditions-don.pdf', url: '/conditions-don.pdf', size: '0.3 MB' }
   ]);
 
-  // Données de démonstration
-  const articles = [
-    {
-      id: 1,
-      title: "Sortie VOP 2025 : Joie et Espoir avec les Enfants Handicapés",
-      content: "Le 15 juin 2025 restera gravé dans nos mémoires comme une journée exceptionnelle de partage et d'amour...",
-      excerpt: "Moment de joie et de partage avec les enfants hospitalisés. Notre équipe VOP s'est rendue à l'Association Tous Différents de Libreville pour une mission spéciale dédiée aux enfants handicapés.",
-      category: "VOPyouth",
-      image: "/images/activities/1000151414.jpg",
-      published: true,
-      featured: true,
-      views: 1250,
-      likes: 89,
-      comments: 12,
-      created_at: "2025-01-15T10:00:00Z",
-      updated_at: "2025-01-15T10:00:00Z"
-    }
-  ];
+  // Utilisation des hooks de base de données
+  const {
+    articles: articlesData,
+    users: usersData,
+    analytics: analyticsData,
+    notifications: notificationsData
+  } = useDashboard();
 
-  const users = [
-    {
-      id: 1,
-      name: "ANDJ Daniel Jonathan",
-      email: "jonathanakarentoutoume@gmail.com",
-      role: "Super Admin",
-      status: "active",
-      last_login: "2025-01-15T10:00:00Z",
-      avatar: "/images/founder/photo_andj_ceo.jpg",
-      permissions: ["read", "write", "delete", "admin", "moderate", "manage_users"],
-      created_at: "2025-01-01T00:00:00Z"
-    },
-    {
-      id: 2,
-      name: "Ludmilla T",
-      email: "ludmillantoutoume@gmail.com",
-      role: "Admin",
-      status: "active",
-      last_login: "2025-01-14T15:30:00Z",
-      avatar: "/images/team/ludmilla.jpg",
-      permissions: ["read", "write", "moderate"],
-      created_at: "2025-01-10T00:00:00Z"
-    }
-  ];
-
-  const contacts = [
-    {
-      id: 1,
-      name: "Marie Dubois",
-      email: "marie.dubois@email.com",
-      phone: "+241 12 34 56 78",
-      reason: "Don ou partenariat",
-      message: "Bonjour, je souhaite faire un don pour soutenir vos actions.",
-      status: "nouveau",
-      created_at: "2025-01-15T09:00:00Z"
-    }
-  ];
-
-  const notifications = [
-    {
-      id: 1,
-      type: "success",
-      message: "Nouveau don reçu de 50€",
-      time: "2025-01-15T10:00:00Z",
-      read: false,
-      created_at: "2025-01-15T10:00:00Z"
-    },
-    {
-      id: 2,
-      type: "info",
-      message: "Nouveau contact: Marie Dubois",
-      time: "2025-01-15T09:00:00Z",
-      read: false,
-      created_at: "2025-01-15T09:00:00Z"
-    }
-  ];
-
-  const analytics = {
-    totalViews: 1250,
-    totalUsers: 2,
-    totalArticles: 1,
-    totalContacts: 1,
-    totalDonations: 150,
-    monthlyGrowth: 15.5
-  };
+  const articles = articlesData.articles || [];
+  const users = usersData.users || [];
+  const analytics = analyticsData.analytics || { totalViews: 0, totalUsers: 0, totalArticles: 0, totalContacts: 0 };
+  const notifications = notificationsData.notifications || [];
+  const loading = articlesData.loading;
 
   // PWA Installation
   useEffect(() => {
@@ -176,6 +124,40 @@ const AdminDashboardPro = () => {
     }
   };
 
+  // Fonctions CRUD pour les articles
+  const handleCreateArticle = () => {
+    setEditingArticle(null);
+    setShowArticleEditor(true);
+  };
+
+  const handleEditArticle = (article: any) => {
+    setEditingArticle(article);
+    setShowArticleEditor(true);
+  };
+
+  const handleSaveArticle = (articleData: any) => {
+    if (editingArticle) {
+      // Mise à jour
+      setLocalArticles(prev => prev.map(article => 
+        article.id === editingArticle.id ? articleData : article
+      ));
+    } else {
+      // Création
+      setLocalArticles(prev => [...prev, articleData]);
+    }
+    setShowArticleEditor(false);
+    setEditingArticle(null);
+  };
+
+  const handleDeleteArticle = (articleId: number) => {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
+      setLocalArticles(prev => prev.filter(article => article.id !== articleId));
+    }
+  };
+
+  // Combiner les articles de la DB et les articles locaux
+  const allArticles = [...articles, ...localArticles];
+
   const sidebarTabs = [
     { id: 'dashboard', name: 'Tableau de bord', icon: Home, permission: 'read' },
     { id: 'articles', name: 'Articles', icon: FileText, permission: 'write' },
@@ -223,6 +205,18 @@ const AdminDashboardPro = () => {
     }
   };
 
+  // Afficher le loading si nécessaire
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00B0F0] mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -256,13 +250,13 @@ const AdminDashboardPro = () => {
               {/* User Menu */}
               <div className="flex items-center space-x-3">
                 <img 
-                  src={currentUser.avatar} 
-                  alt={currentUser.name}
+                  src={currentUser?.avatar || "/images/founder/photo_andj_ceo.jpg"} 
+                  alt={currentUser?.name || "Admin"}
                   className="w-8 h-8 rounded-full object-cover"
                 />
                 <div className="text-right">
-                  <p className="text-sm font-medium text-gray-900">{currentUser.name}</p>
-                  <p className="text-xs text-gray-500">{currentUser.role}</p>
+                  <p className="text-sm font-medium text-gray-900">{currentUser?.name || "Admin"}</p>
+                  <p className="text-xs text-gray-500">{currentUser?.role || "Super Admin"}</p>
                 </div>
                 <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
                   <LogOut className="w-4 h-4" />
@@ -305,9 +299,10 @@ const AdminDashboardPro = () => {
           {/* Dashboard Tab */}
           {activeTab === 'dashboard' && (
             <div className="space-y-6">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Tableau de bord</h2>
-                <p className="text-gray-600">Vue d'ensemble de votre organisation VOP</p>
+              {/* Welcome Section */}
+              <div className="bg-gradient-to-r from-[#003399] to-[#00B0F0] rounded-2xl p-8 text-white">
+                <h2 className="text-3xl font-bold mb-2">Bienvenue dans le Dashboard VOP</h2>
+                <p className="text-white/90 text-lg">Gérez votre site et suivez l'impact de vos actions</p>
               </div>
 
               {/* Stats Cards */}
@@ -319,7 +314,7 @@ const AdminDashboardPro = () => {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-600">Vues totales</p>
-                      <p className="text-2xl font-bold text-gray-900">{analytics.totalViews.toLocaleString()}</p>
+                      <p className="text-2xl font-bold text-gray-900">{analytics.totalViews?.toLocaleString() || '0'}</p>
                     </div>
                   </div>
                 </div>
@@ -331,7 +326,7 @@ const AdminDashboardPro = () => {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-600">Utilisateurs</p>
-                      <p className="text-2xl font-bold text-gray-900">{analytics.totalUsers}</p>
+                      <p className="text-2xl font-bold text-gray-900">{analytics.totalUsers || users.length}</p>
                     </div>
                   </div>
                 </div>
@@ -343,7 +338,7 @@ const AdminDashboardPro = () => {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-600">Articles</p>
-                      <p className="text-2xl font-bold text-gray-900">{analytics.totalArticles}</p>
+                      <p className="text-2xl font-bold text-gray-900">{analytics.totalArticles || articles.length}</p>
                     </div>
                   </div>
                 </div>
@@ -355,7 +350,7 @@ const AdminDashboardPro = () => {
                     </div>
                     <div className="ml-4">
                       <p className="text-sm font-medium text-gray-600">Dons (€)</p>
-                      <p className="text-2xl font-bold text-gray-900">{analytics.totalDonations}</p>
+                      <p className="text-2xl font-bold text-gray-900">{analytics.totalDonations || '0'}</p>
                     </div>
                   </div>
                 </div>
@@ -369,7 +364,7 @@ const AdminDashboardPro = () => {
                   </div>
                   <div className="p-6">
                     <div className="space-y-4">
-                      {articles.map((article) => (
+                      {articles.length > 0 ? articles.slice(0, 3).map((article) => (
                         <div key={article.id} className="flex items-center space-x-4">
                           <img 
                             src={article.image} 
@@ -392,7 +387,9 @@ const AdminDashboardPro = () => {
                             </span>
                           </div>
                         </div>
-                      ))}
+                      )) : (
+                        <p className="text-gray-500 text-center py-4">Aucun article pour le moment</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -403,20 +400,22 @@ const AdminDashboardPro = () => {
                   </div>
                   <div className="p-6">
                     <div className="space-y-4">
-                      {contacts.map((contact) => (
-                        <div key={contact.id} className="flex items-center space-x-4">
+                      {notifications.length > 0 ? notifications.slice(0, 3).map((notification) => (
+                        <div key={notification.id} className="flex items-center space-x-4">
                           <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
                             <MessageCircle className="w-5 h-5 text-gray-600" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900">{contact.name}</p>
-                            <p className="text-sm text-gray-500">{contact.reason}</p>
+                            <p className="text-sm font-medium text-gray-900">{notification.message}</p>
+                            <p className="text-sm text-gray-500">{formatDate(notification.time)}</p>
                           </div>
-                          <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(contact.status)}`}>
-                            {contact.status}
+                          <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(notification.type)}`}>
+                            {notification.type}
                           </span>
                         </div>
-                      ))}
+                      )) : (
+                        <p className="text-gray-500 text-center py-4">Aucun contact récent</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -429,10 +428,13 @@ const AdminDashboardPro = () => {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Gestion des Articles</h2>
+                  <h2 className="text-2xl font-bold text-[#003399] mb-2">Gestion des Articles</h2>
                   <p className="text-gray-600">Créez et gérez vos articles VOP</p>
                 </div>
-                <button className="flex items-center space-x-2 px-4 py-2 bg-[#00B0F0] text-white rounded-lg hover:bg-[#003399] transition-colors">
+                <button 
+                  onClick={handleCreateArticle}
+                  className="flex items-center space-x-2 px-4 py-2 bg-[#00B0F0] text-white rounded-lg hover:bg-[#003399] transition-colors"
+                >
                   <Plus className="w-4 h-4" />
                   <span>Nouvel article</span>
                 </button>
@@ -441,10 +443,10 @@ const AdminDashboardPro = () => {
               <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="p-6">
                   <div className="space-y-4">
-                    {articles.map((article) => (
-                      <div key={article.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg">
+                    {allArticles.length > 0 ? allArticles.map((article) => (
+                      <div key={article.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
                         <img 
-                          src={article.image} 
+                          src={article.image || "/images/placeholder-article.jpg"} 
                           alt={article.title}
                           className="w-16 h-16 rounded-lg object-cover"
                         />
@@ -456,21 +458,50 @@ const AdminDashboardPro = () => {
                             <span>{article.likes} likes</span>
                             <span>{article.comments} commentaires</span>
                             <span>{formatDate(article.created_at)}</span>
+                            <span className={`px-2 py-1 text-xs rounded-full ${
+                              article.published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                            }`}>
+                              {article.published ? 'Publié' : 'Brouillon'}
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                          <button 
+                            onClick={() => window.open(`/article/${article.id}`, '_blank')}
+                            className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                            title="Voir l'article"
+                          >
                             <Eye className="w-4 h-4" />
                           </button>
-                          <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                          <button 
+                            onClick={() => handleEditArticle(article)}
+                            className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                            title="Modifier l'article"
+                          >
                             <Edit className="w-4 h-4" />
                           </button>
-                          <button className="p-2 text-red-400 hover:text-red-600 transition-colors">
+                          <button 
+                            onClick={() => handleDeleteArticle(article.id)}
+                            className="p-2 text-red-400 hover:text-red-600 transition-colors"
+                            title="Supprimer l'article"
+                          >
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
-                    ))}
+                    )) : (
+                      <div className="text-center py-12">
+                        <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun article</h3>
+                        <p className="text-gray-600">Commencez par créer votre premier article</p>
+                        <button 
+                          onClick={handleCreateArticle}
+                          className="mt-4 px-6 py-2 bg-[#00B0F0] text-white rounded-lg hover:bg-[#003399] transition-colors"
+                        >
+                          Créer un article
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -482,7 +513,7 @@ const AdminDashboardPro = () => {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Gestion des Utilisateurs</h2>
+                  <h2 className="text-2xl font-bold text-[#003399] mb-2">Gestion des Utilisateurs</h2>
                   <p className="text-gray-600">Gérez les accès et permissions</p>
                 </div>
                 <button 
@@ -497,10 +528,10 @@ const AdminDashboardPro = () => {
               <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="p-6">
                   <div className="space-y-4">
-                    {users.map((user) => (
+                    {users.length > 0 ? users.map((user) => (
                       <div key={user.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg">
                         <img 
-                          src={user.avatar} 
+                          src={user.avatar || "/images/founder/photo_andj_ceo.jpg"} 
                           alt={user.name}
                           className="w-12 h-12 rounded-full object-cover"
                         />
@@ -521,7 +552,13 @@ const AdminDashboardPro = () => {
                           </button>
                         </div>
                       </div>
-                    ))}
+                    )) : (
+                      <div className="text-center py-12">
+                        <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun utilisateur</h3>
+                        <p className="text-gray-600">Invitez des membres à rejoindre votre équipe</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -531,32 +568,29 @@ const AdminDashboardPro = () => {
           {/* Contacts Tab */}
           {activeTab === 'contacts' && (
             <div className="space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Messages de Contact</h2>
-                <p className="text-gray-600">Gérez les demandes et messages reçus</p>
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-[#003399]">Messages de Contact</h2>
+                <div className="text-sm text-gray-600">
+                  {notifications.length} message{notifications.length > 1 ? 's' : ''}
+                </div>
               </div>
 
               <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="p-6">
                   <div className="space-y-4">
-                    {contacts.map((contact) => (
-                      <div key={contact.id} className="p-4 border border-gray-200 rounded-lg">
+                    {notifications.length > 0 ? notifications.map((notification) => (
+                      <div key={notification.id} className="p-4 border border-gray-200 rounded-lg">
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-900">{contact.name}</h3>
-                            <p className="text-sm text-gray-600">{contact.email}</p>
-                            <p className="text-sm text-gray-500">{contact.phone}</p>
+                            <h3 className="text-lg font-semibold text-gray-900">{notification.message}</h3>
+                            <p className="text-sm text-gray-600">{notification.type}</p>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(contact.status)}`}>
-                              {contact.status}
+                            <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(notification.type)}`}>
+                              {notification.type}
                             </span>
-                            <span className="text-xs text-gray-500">{formatDate(contact.created_at)}</span>
+                            <span className="text-xs text-gray-500">{formatDate(notification.time)}</span>
                           </div>
-                        </div>
-                        <div className="mb-3">
-                          <p className="text-sm font-medium text-gray-700 mb-1">Raison: {contact.reason}</p>
-                          <p className="text-sm text-gray-600">{contact.message}</p>
                         </div>
                         <div className="flex items-center space-x-2">
                           <button className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-colors">
@@ -567,7 +601,100 @@ const AdminDashboardPro = () => {
                           </button>
                         </div>
                       </div>
-                    ))}
+                    )) : (
+                      <div className="text-center py-12">
+                        <MessageCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun message</h3>
+                        <p className="text-gray-600">Les messages de contact apparaîtront ici</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Media Tab */}
+          {activeTab === 'media' && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-[#003399]">Gestion des Médias</h2>
+                <button className="flex items-center space-x-2 bg-[#00B0F0] text-white px-4 py-2 rounded-lg hover:bg-[#003399] transition-colors">
+                  <Upload className="w-5 h-5" />
+                  <span>Uploader</span>
+                </button>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div className="p-6">
+                  <div className="text-center py-12">
+                    <Image className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Gestion des Médias</h3>
+                    <p className="text-gray-600">Uploader et gérez vos images et fichiers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Videos Tab */}
+          {activeTab === 'videos' && (
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-[#003399]">Gestion des Vidéos</h2>
+                <button className="flex items-center space-x-2 bg-[#00B0F0] text-white px-4 py-2 rounded-lg hover:bg-[#003399] transition-colors">
+                  <Plus className="w-5 h-5" />
+                  <span>Ajouter une vidéo</span>
+                </button>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div className="p-6">
+                  <VideoManager />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Analytics Tab */}
+          {activeTab === 'analytics' && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-[#003399]">Analytics Avancées</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <TrendingUp className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-600">Croissance</p>
+                      <p className="text-2xl font-bold text-gray-900">+15.5%</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-green-100 rounded-lg">
+                      <Heart className="w-6 h-6 text-green-600" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-600">Engagement</p>
+                      <p className="text-2xl font-bold text-gray-900">89%</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <div className="flex items-center">
+                    <div className="p-2 bg-yellow-100 rounded-lg">
+                      <Target className="w-6 h-6 text-yellow-600" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-600">Objectifs</p>
+                      <p className="text-2xl font-bold text-gray-900">75%</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -578,30 +705,29 @@ const AdminDashboardPro = () => {
           {activeTab === 'notifications' && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Centre de Notifications</h2>
+                <h2 className="text-2xl font-bold text-[#003399]">Centre de Notifications</h2>
                 <p className="text-gray-600">Gérez vos notifications et alertes</p>
               </div>
 
               <div className="bg-white rounded-lg shadow-sm border border-gray-200">
                 <div className="p-6">
-                  <div className="space-y-4">
-                    {notifications.map((notification) => (
-                      <div key={notification.id} className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
-                        <div className="flex-shrink-0">
-                          {getNotificationIcon(notification.type)}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 mb-1">{notification.message}</p>
-                          <p className="text-xs text-gray-500">{formatDate(notification.time)}</p>
-                        </div>
-                        <div className="flex-shrink-0">
-                          {!notification.read && (
-                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <NotificationCenter />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Site Builder Tab */}
+          {activeTab === 'site-builder' && (
+            <div className="space-y-6">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-[#003399] mb-2">Constructeur de Site</h2>
+                <p className="text-gray-600">Modifiez l'apparence et le contenu de votre site comme sur WordPress/Wix</p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div className="p-6">
+                  <SiteBuilder />
                 </div>
               </div>
             </div>
@@ -678,22 +804,65 @@ const AdminDashboardPro = () => {
             </div>
           )}
 
-          {/* Other tabs placeholder */}
-          {!['dashboard', 'articles', 'users', 'contacts', 'notifications', 'pdf-manager'].includes(activeTab) && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Settings className="w-8 h-8 text-gray-400" />
+          {/* AI Assistant Tab */}
+          {activeTab === 'ai-assistant' && (
+            <div className="space-y-6">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-[#003399] mb-2">VOP AI - Assistant IA 24/7</h2>
+                <p className="text-gray-600">Votre assistant intelligent pour gérer LA VOP</p>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {sidebarTabs.find(tab => tab.id === activeTab)?.name}
-              </h3>
-              <p className="text-gray-600">Cette section sera bientôt disponible</p>
+
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div className="p-6">
+                  <AIAssistant />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Mobile Simulator Tab */}
+          {activeTab === 'mobile-simulator' && (
+            <div className="space-y-6">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-[#003399] mb-2">Simulateur Mobile</h2>
+                <p className="text-gray-600">Testez votre site sur différents appareils mobiles</p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div className="p-6">
+                  <MobileSimulator />
+                </div>
+              </div>
             </div>
           )}
         </main>
       </div>
+
+      {/* Modals */}
+      {showInviteModal && (
+        <UserInvitationModal onClose={() => setShowInviteModal(false)} />
+      )}
+
+      {showMobileSimulator && (
+        <MobileSimulator onClose={() => setShowMobileSimulator(false)} />
+      )}
+
+      {showSiteBuilder && (
+        <SiteBuilder onClose={() => setShowSiteBuilder(false)} />
+      )}
+
+      {showArticleEditor && (
+        <ArticleEditor
+          article={editingArticle}
+          onSave={handleSaveArticle}
+          onCancel={() => {
+            setShowArticleEditor(false);
+            setEditingArticle(null);
+          }}
+        />
+      )}
     </div>
   );
 };
 
-export default AdminDashboardPro;
+export default AdminDashboard;

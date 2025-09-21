@@ -36,6 +36,13 @@ const AdminDashboard = () => {
   const [articleContent, setArticleContent] = useState('');
   const [isPWAInstalled, setIsPWAInstalled] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showPDFManager, setShowPDFManager] = useState(false);
+  const [uploadedPDFs, setUploadedPDFs] = useState([
+    { name: 'rapport-annuel-2023.pdf', url: '/rapport-annuel-2023.pdf', size: '2.1 MB' },
+    { name: 'rapport-financier-2023.pdf', url: '/rapport-financier-2023.pdf', size: '1.8 MB' },
+    { name: 'politique-confidentialite.pdf', url: '/politique-confidentialite.pdf', size: '0.5 MB' },
+    { name: 'conditions-don.pdf', url: '/conditions-don.pdf', size: '0.3 MB' }
+  ]);
   
   // Utilisation des hooks de base de données
   const {
@@ -112,6 +119,30 @@ const AdminDashboard = () => {
     }
   };
 
+  // Upload PDF
+  const handlePDFUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type === 'application/pdf') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const pdfData = e.target?.result;
+        if (pdfData) {
+          // Simuler l'upload (en production, envoyer vers un serveur)
+          const newPDF = {
+            name: file.name,
+            url: URL.createObjectURL(file),
+            size: `${(file.size / 1024 / 1024).toFixed(1)} MB`
+          };
+          setUploadedPDFs(prev => [...prev, newPDF]);
+          alert(`✅ PDF "${file.name}" uploadé avec succès !`);
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('❌ Veuillez sélectionner un fichier PDF valide.');
+    }
+  };
+
   // Fonction de déconnexion
   const handleLogout = () => {
     logout();
@@ -179,6 +210,7 @@ const AdminDashboard = () => {
     { id: 'videos', name: 'Vidéos', icon: Video, permission: 'read' },
     { id: 'users', name: 'Utilisateurs', icon: Users, permission: 'manage_users' },
     { id: 'analytics', name: 'Analytics', icon: TrendingUp, permission: 'read' },
+    { id: 'pdf-manager', name: 'PDF Manager', icon: FileText, permission: 'admin' },
     { id: 'site-builder', name: 'Constructeur', icon: Globe, permission: 'admin' },
     { id: 'settings', name: 'Paramètres', icon: Settings, permission: 'admin' }
   ];
@@ -1270,6 +1302,77 @@ Date: ${new Date(contact.timestamp).toLocaleString('fr-FR')}
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Section PDF Manager */}
+      {activeTab === 'pdf-manager' && (
+        <div className="p-6">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Gestionnaire de PDF</h2>
+            <p className="text-gray-600">Téléversez et gérez vos documents PDF pour la transparence et la gouvernance</p>
+          </div>
+          
+          {/* Upload Section */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <h3 className="text-lg font-semibold mb-4">Téléverser un nouveau PDF</h3>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+              <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-600 mb-4">Glissez-déposez votre fichier PDF ici ou cliquez pour sélectionner</p>
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={handlePDFUpload}
+                className="hidden"
+                id="pdf-upload"
+              />
+              <label
+                htmlFor="pdf-upload"
+                className="inline-flex items-center px-4 py-2 bg-[#00B0F0] text-white rounded-lg hover:bg-[#003399] transition-colors cursor-pointer"
+              >
+                <Upload className="w-4 h-4 mr-2" />
+                Sélectionner un PDF
+              </label>
+              <p className="text-sm text-gray-500 mt-2">Formats acceptés: PDF (max 10MB)</p>
+            </div>
+          </div>
+
+          {/* PDF List */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+            <div className="p-6 border-b border-gray-200">
+              <h3 className="text-lg font-semibold">Documents PDF existants</h3>
+            </div>
+            <div className="divide-y divide-gray-200">
+              {uploadedPDFs.map((pdf, index) => (
+                <div key={index} className="p-6 flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                      <FileText className="w-5 h-5 text-red-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{pdf.name}</h4>
+                      <p className="text-sm text-gray-500">Taille: {pdf.size}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <a
+                      href={pdf.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1 text-[#00B0F0] hover:text-[#003399] transition-colors"
+                    >
+                      <Eye className="w-4 h-4" />
+                      <span>Voir</span>
+                    </a>
+                    <button className="flex items-center space-x-1 text-gray-500 hover:text-red-600 transition-colors">
+                      <Trash2 className="w-4 h-4" />
+                      <span>Supprimer</span>
+                    </button>
                   </div>
                 </div>
               ))}

@@ -20,9 +20,9 @@ const FounderVideoSection = () => {
               <video 
                 className="w-full h-auto"
                 controls
-                poster="/src/assets/images/founder/photo_andj_ceo.jpg"
+                poster="/images/founder/photo_andj_ceo.jpg"
               >
-                <source src="/src/assets/videos/1000151380.mp4" type="video/mp4" />
+                <source src="/videos/1000151380.mp4" type="video/mp4" />
                 Votre navigateur ne supporte pas la lecture vidéo.
               </video>
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>

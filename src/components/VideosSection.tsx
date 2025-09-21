@@ -6,8 +6,8 @@ const VideosSection = () => {
       id: 1,
       title: "Sortie VOP 2024",
       description: "Moments de joie et de partage lors de nos sorties",
-      video: "/src/assets/videos/1000102808.mp4",
-      thumbnail: "/src/assets/images/activities/IMG-20250614-WA0058.jpg",
+      video: "/videos/1000102808.mp4",
+      thumbnail: "/images/activities/IMG-20250614-WA0058.jpg",
       duration: "2:30",
       views: "3.2K",
       tiktokUrl: "https://tiktok.com/@lavop_org"
@@ -16,8 +16,8 @@ const VideosSection = () => {
       id: 2,
       title: "Activités VOP",
       description: "Découvrez nos actions sur TikTok avec 3000+ abonnés",
-      video: "/src/assets/videos/1000102806.mp4",
-      thumbnail: "/src/assets/images/activities/1000151414.jpg",
+      video: "/videos/1000102806.mp4",
+      thumbnail: "/images/activities/1000151414.jpg",
       duration: "1:45",
       views: "2.8K",
       tiktokUrl: "https://tiktok.com/@lavop_org"

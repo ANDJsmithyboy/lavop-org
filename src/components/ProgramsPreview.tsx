@@ -10,7 +10,7 @@ const ProgramsPreview = () => {
       impact: "Enfants avec handicaps heureux",
       color: "text-[#CC3366]",
       bgColor: "bg-[#CC3366]",
-      image: "/src/assets/images/activities/IMG-20250614-WA0058.jpg"
+      image: "/images/activities/IMG-20250614-WA0058.jpg"
     },
     {
       icon: Users,
@@ -19,7 +19,7 @@ const ProgramsPreview = () => {
       impact: "Missions ponctuelles",
       color: "text-[#66CCFF]",
       bgColor: "bg-[#66CCFF]",
-      image: "/src/assets/images/activities/IMG-20230321-WA0010.jpg"
+      image: "/images/activities/IMG-20230321-WA0010.jpg"
     },
     {
       icon: GraduationCap,

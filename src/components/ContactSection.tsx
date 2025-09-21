@@ -248,7 +248,7 @@ Ce message a été envoyé automatiquement depuis le site web VOP.`;
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1">Téléphone</h4>
-                    <p className="text-white/90">+241 07 47 91 530</p>
+                    <p className="text-white/90">+241 74 79 15 30</p>
                     <p className="text-white/90 text-sm">WhatsApp disponible</p>
                   </div>
                 </div>
@@ -259,7 +259,7 @@ Ce message a été envoyé automatiquement depuis le site web VOP.`;
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1">WhatsApp</h4>
-                    <p className="text-white/90">+241 07 47 91 530</p>
+                    <p className="text-white/90">+241 74 79 15 30</p>
                     <p className="text-white/90 text-sm">Disponible 24h/7j</p>
                   </div>
                 </div>

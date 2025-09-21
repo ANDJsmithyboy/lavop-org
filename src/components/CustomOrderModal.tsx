@@ -182,7 +182,7 @@ const CustomOrderModal = ({ isOpen, onClose }: CustomOrderModalProps) => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent"
-                placeholder="+241 07 47 91 530"
+                placeholder="+241 74 79 15 30"
               />
             </div>
           </div>

@@ -9,7 +9,7 @@ const FounderVideoSection = () => {
             Rencontrez Notre Fondateur
           </h2>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Découvrez la vision et la passion d'ANDJ Daniel Jonathan pour l'action humanitaire
+            Découvrez la vision et la passion d'ANDJ Daniel Jonathan
           </p>
         </div>
 
@@ -37,12 +37,12 @@ const FounderVideoSection = () => {
               </div>
               <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
                 <Users className="w-6 h-6 text-[#FFD700] mx-auto mb-2" />
-                <div className="text-2xl font-bold">2</div>
+                <div className="text-2xl font-bold">20+</div>
                 <div className="text-white/80 text-sm">Orphelinats soutenus</div>
               </div>
               <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
                 <Globe className="w-6 h-6 text-[#FFD700] mx-auto mb-2" />
-                <div className="text-2xl font-bold">3</div>
+                <div className="text-2xl font-bold">9</div>
                 <div className="text-white/80 text-sm">Pays étrangers</div>
               </div>
             </div>

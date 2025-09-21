@@ -79,7 +79,7 @@ const AIAssistant: React.FC = () => {
     }
     
     if (input.includes('contact') || input.includes('adresse')) {
-      return 'Vous pouvez nous contacter via :\n• Email : contact@lavop.org\n• Téléphone : +241 07 47 91 530\n• WhatsApp : +241 65 51 58 77\n• Adresse : Libreville, Gabon\n\nComment puis-je vous aider davantage ?';
+      return 'Vous pouvez nous contacter via :\n• Email : contact@lavop.org\n• Téléphone : +241 74 79 15 30\n• WhatsApp : +241 65 51 58 77\n• Adresse : Libreville, Gabon\n\nComment puis-je vous aider davantage ?';
     }
     
     if (input.includes('mission') || input.includes('vop')) {

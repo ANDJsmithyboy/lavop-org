@@ -153,7 +153,7 @@ const UserInvitationModal = ({ isOpen, onClose, onInvite }: UserInvitationModalP
           
           <div style="background: #f8f9fa; padding: 20px; text-align: center; color: #6c757d;">
             <p>La VOP - Christ pour la Veuve, l'Orphelin, le Pauvre</p>
-            <p>Email: contact@lavop.org | Tél: +241 07 47 91 530</p>
+            <p>Email: contact@lavop.org | Tél: +241 74 79 15 30</p>
           </div>
         </div>
       `

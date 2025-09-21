@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Plus, Edit, Trash2, Save, X, Eye, FileText, Image, Video, Users, Settings, 
   BarChart3, TrendingUp, Download, Upload, Search,
@@ -34,6 +34,8 @@ const AdminDashboard = () => {
   const [showMobileSimulator, setShowMobileSimulator] = useState(false);
   const [showSiteBuilder, setShowSiteBuilder] = useState(false);
   const [articleContent, setArticleContent] = useState('');
+  const [isPWAInstalled, setIsPWAInstalled] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   
   // Utilisation des hooks de base de données
   const {
@@ -42,6 +44,64 @@ const AdminDashboard = () => {
     analytics,
     notifications
   } = useDashboard();
+
+  // PWA Installation
+  useEffect(() => {
+    // Enregistrer le service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/admin-sw.js')
+        .then((registration) => {
+          console.log('Service Worker enregistré:', registration);
+        })
+        .catch((error) => {
+          console.log('Erreur Service Worker:', error);
+        });
+    }
+
+    // Gérer l'installation PWA
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Vérifier si l'app est déjà installée
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsPWAInstalled(true);
+    }
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  // Installer PWA
+  const installPWA = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setIsPWAInstalled(true);
+      }
+      setDeferredPrompt(null);
+    }
+  };
+
+  // Demander les notifications
+  const requestNotificationPermission = async () => {
+    if ('Notification' in window) {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        // Envoyer une notification de test
+        new Notification('VOP Admin', {
+          body: 'Notifications activées avec succès !',
+          icon: '/logo-vop.jpg',
+          badge: '/logo-vop.jpg'
+        });
+      }
+    }
+  };
 
   // Fonction de déconnexion
   const handleLogout = () => {
@@ -157,6 +217,26 @@ const AdminDashboard = () => {
                   title="Mode Mobile"
                 >
                   <Globe className="w-5 h-5" />
+                </button>
+                
+                {/* PWA Install Button */}
+                {deferredPrompt && !isPWAInstalled && (
+                  <button
+                    onClick={installPWA}
+                    className="p-2 text-[#FFD700] hover:text-[#FFA500] hover:bg-yellow-100 rounded-lg transition-colors"
+                    title="Installer l'App"
+                  >
+                    <Download className="w-5 h-5" />
+                  </button>
+                )}
+                
+                {/* Notifications Button */}
+                <button
+                  onClick={requestNotificationPermission}
+                  className="p-2 text-[#CC3366] hover:text-[#AA2255] hover:bg-red-100 rounded-lg transition-colors"
+                  title="Activer les Notifications"
+                >
+                  <Bell className="w-5 h-5" />
                 </button>
                 
                 <a 

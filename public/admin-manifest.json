@@ -1,0 +1,60 @@
+{
+  "name": "VOP Admin Dashboard",
+  "short_name": "VOP Admin",
+  "description": "Dashboard d'administration VOP - Gestion complète du site",
+  "start_url": "/admin",
+  "display": "standalone",
+  "background_color": "#003399",
+  "theme_color": "#00B0F0",
+  "orientation": "portrait-primary",
+  "scope": "/admin",
+  "icons": [
+    {
+      "src": "/logo-vop.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-vop.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "business", "utilities"],
+  "lang": "fr",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Articles",
+      "short_name": "Articles",
+      "description": "Gérer les articles",
+      "url": "/admin?tab=articles",
+      "icons": [{ "src": "/logo-vop.jpg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Médias",
+      "short_name": "Médias",
+      "description": "Gérer les médias",
+      "url": "/admin?tab=media",
+      "icons": [{ "src": "/logo-vop.jpg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Utilisateurs",
+      "short_name": "Users",
+      "description": "Gérer les utilisateurs",
+      "url": "/admin?tab=users",
+      "icons": [{ "src": "/logo-vop.jpg", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/logo-vop.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ]
+}

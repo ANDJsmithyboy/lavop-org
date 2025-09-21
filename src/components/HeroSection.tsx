@@ -39,7 +39,10 @@ const HeroSection = () => {
               backgroundImage: `linear-gradient(rgba(0, 51, 153, 0.7), rgba(0, 176, 240, 0.7)), url('${image}')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center center',
-              backgroundAttachment: 'scroll'
+              backgroundAttachment: 'scroll',
+              backgroundRepeat: 'no-repeat',
+              minHeight: '100vh',
+              width: '100%'
             }}
           />
         ))}

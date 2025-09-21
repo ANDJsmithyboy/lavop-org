@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import ArticleEditor from './ArticleEditor';
 import { getArticles, saveArticle, deleteArticle, Article } from '../utils/articleSync';
+import { getCurrentUser, logout } from '../utils/auth';
 
 const ModernDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -16,6 +17,7 @@ const ModernDashboard = () => {
   const [showArticleEditor, setShowArticleEditor] = useState(false);
   const [editingArticle, setEditingArticle] = useState<any>(null);
   const [articles, setArticles] = useState<Article[]>(getArticles());
+  const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
   const [mediaFiles, setMediaFiles] = useState([
     {
@@ -90,6 +92,24 @@ const ModernDashboard = () => {
   });
 
   const [previewMode, setPreviewMode] = useState('desktop');
+
+  // Vérifier l'authentification
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-[#003399] mb-4">Accès Refusé</h2>
+          <p className="text-gray-600 mb-6">Veuillez vous connecter pour accéder au tableau de bord.</p>
+          <button
+            onClick={() => window.location.href = '/login'}
+            className="bg-[#00B0F0] text-white px-4 py-2 rounded-lg hover:bg-[#003399] transition-colors"
+          >
+            Se connecter
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const tabs = [
     { id: 'dashboard', name: 'Tableau de bord', icon: Home, color: 'text-blue-600' },
@@ -180,6 +200,27 @@ const ModernDashboard = () => {
                 <Download className="w-4 h-4 mr-2" />
                 Publier
               </button>
+              <div className="flex items-center space-x-3 border-l border-gray-200 pl-4">
+                <img
+                  src={currentUser.avatar || `https://ui-avatars.com/api/?name=${currentUser.name || currentUser.email}&background=00B0F0&color=fff`}
+                  alt="User Avatar"
+                  className="w-8 h-8 rounded-full object-cover border-2 border-[#00B0F0]"
+                />
+                <div className="text-right">
+                  <div className="text-sm font-semibold text-gray-900">{currentUser.name}</div>
+                  <div className="text-xs text-gray-500">{currentUser.role}</div>
+                </div>
+                <button
+                  onClick={() => {
+                    logout();
+                    window.location.href = '/login';
+                  }}
+                  className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+                  title="Déconnexion"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -552,130 +593,14 @@ const ModernDashboard = () => {
 
       {/* Article Editor Modal */}
       {showArticleEditor && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900">
-                {editingArticle ? 'Modifier l\'article' : 'Nouvel article'}
-              </h2>
-              <button
-                onClick={() => setShowArticleEditor(false)}
-                className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <form id="article-form" className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Titre</label>
-                  <input
-                    type="text"
-                    name="title"
-                    defaultValue={editingArticle?.title || ''}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent"
-                    placeholder="Titre de l'article"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Extrait</label>
-                  <textarea
-                    name="excerpt"
-                    defaultValue={editingArticle?.excerpt || ''}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent"
-                    rows={3}
-                    placeholder="Résumé de l'article"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Contenu</label>
-                  <div className="border border-gray-300 rounded-lg">
-                    <div className="flex items-center space-x-2 p-2 border-b border-gray-200 bg-gray-50">
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <Bold className="w-4 h-4" />
-                      </button>
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <Italic className="w-4 h-4" />
-                      </button>
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <Underline className="w-4 h-4" />
-                      </button>
-                      <div className="w-px h-6 bg-gray-300"></div>
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <AlignLeft className="w-4 h-4" />
-                      </button>
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <AlignCenter className="w-4 h-4" />
-                      </button>
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <AlignRight className="w-4 h-4" />
-                      </button>
-                      <div className="w-px h-6 bg-gray-300"></div>
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <Link className="w-4 h-4" />
-                      </button>
-                      <button className="p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                        <List className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <textarea
-                      name="content"
-                      defaultValue={editingArticle?.content || ''}
-                      className="w-full p-4 border-0 focus:ring-0 resize-none"
-                      rows={10}
-                      placeholder="Contenu de l'article..."
-                      required
-                    />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
-                    <select name="category" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent" required>
-                      <option value="">Sélectionner une catégorie</option>
-                      <option value="Actions Locales">Actions Locales</option>
-                      <option value="Jeunesse">Jeunesse</option>
-                      <option value="Dons & Impact">Dons & Impact</option>
-                      <option value="Soutien Veuves">Soutien Veuves</option>
-                      <option value="Formation">Formation</option>
-                      <option value="International">International</option>
-                      <option value="Témoignages">Témoignages</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Image de couverture</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-end space-x-4 p-6 border-t border-gray-200 bg-gray-50">
-              <button
-                onClick={() => setShowArticleEditor(false)}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                Annuler
-              </button>
-              <button
-                onClick={() => handleSaveArticle({})}
-                className="px-6 py-2 bg-[#00B0F0] text-white rounded-lg hover:bg-[#003399] transition-colors"
-              >
-                {editingArticle ? 'Mettre à jour' : 'Créer l\'article'}
-              </button>
-            </div>
-          </div>
-        </div>
+        <ArticleEditor
+          article={editingArticle}
+          onSave={handleSaveArticle}
+          onCancel={() => {
+            setShowArticleEditor(false);
+            setEditingArticle(null);
+          }}
+        />
       )}
     </div>
   );

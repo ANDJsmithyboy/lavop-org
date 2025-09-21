@@ -29,7 +29,7 @@ const VOPVideosSection = () => {
       id: 1,
       title: "Association Tous Différents - Dons VOP",
       description: "Moment de partage et de joie avec les enfants handicapés. L'amour de Dieu en action.",
-      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      video: "/videos/1000102806.mp4",
       thumbnail: "/images/activities/1000151414.jpg",
       duration: "2:30",
       category: "Dons & Actions",
@@ -39,7 +39,7 @@ const VOPVideosSection = () => {
       id: 2,
       title: "Dons de la VOP en Action",
       description: "Démonstration concrète de l'amour de Dieu par les œuvres et la charité.",
-      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      video: "/videos/1000102808.mp4",
       thumbnail: "/images/activities/IMG-20250614-WA0058.jpg",
       duration: "1:45",
       category: "Impact Local",
@@ -49,7 +49,7 @@ const VOPVideosSection = () => {
       id: 3,
       title: "ANDJ Daniel Jonathan - Fondateur VOP",
       description: "Message du fondateur et visionnaire de La VOP. Témoignage et vision pour l'avenir.",
-      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      video: "/videos/1000151380.mp4",
       thumbnail: "/images/founder/photo_andj_ceo.jpg",
       duration: "3:20",
       category: "Leadership",
@@ -121,16 +121,15 @@ const VOPVideosSection = () => {
               <div key={video.id} className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/20">
                 {/* Video Player */}
                 <div className="relative">
-                  <div className="relative w-full h-48 bg-gray-900 rounded-t-2xl overflow-hidden">
-                    <iframe
-                      className="w-full h-full"
-                      src={video.video}
-                      title={video.title}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
+                  <video
+                    className="w-full h-48 object-cover rounded-t-2xl"
+                    poster={video.thumbnail}
+                    controls
+                    preload="metadata"
+                  >
+                    <source src={video.video} type="video/mp4" />
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                  </video>
                   
                   {/* TikTok Link Overlay */}
                   {video.tiktokUrl && (

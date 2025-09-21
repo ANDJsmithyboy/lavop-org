@@ -6,7 +6,7 @@ const VOPActionsSection = () => {
       id: 1,
       title: "Association Tous Différents",
       description: "Juin 2025 - Dons aux enfants handicapés. Mission d'amour et de compassion avec l'Association Tous Différents.",
-      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      video: "/videos/1000102806.mp4",
       thumbnail: "/images/activities/1000151414.jpg",
       tiktokUrl: "https://www.tiktok.com/@christpourlavop/video/7516187714329382150",
       impact: "Enfants handicapés soutenus",
@@ -18,7 +18,7 @@ const VOPActionsSection = () => {
       id: 2,
       title: "Dons VOP en Action",
       description: "Démonstration concrète de l'amour de Dieu par les œuvres et la charité. Citation Ésaïe 1:17 en pratique.",
-      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      video: "/videos/1000102808.mp4",
       thumbnail: "/images/activities/IMG-20250614-WA0058.jpg",
       tiktokUrl: "https://www.tiktok.com/@christpourlavop/video/7243751317095730438",
       impact: "Mission d'amour démontrée",
@@ -30,7 +30,7 @@ const VOPActionsSection = () => {
       id: 3,
       title: "Message du Fondateur",
       description: "ANDJ Daniel Jonathan, fondateur et visionnaire de La VOP, partage sa vision et son témoignage.",
-      video: "https://www.youtube.com/embed/kFQCYR6tiTw",
+      video: "/videos/1000151380.mp4",
       thumbnail: "/images/founder/photo_andj_ceo.jpg",
       tiktokUrl: null,
       impact: "Leadership et vision",
@@ -59,16 +59,15 @@ const VOPActionsSection = () => {
             <div key={action.id} className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
               {/* Video */}
               <div className="relative">
-                <div className="relative w-full h-64 bg-gray-900 rounded-t-2xl overflow-hidden">
-                  <iframe
-                    className="w-full h-full"
-                    src={action.video}
-                    title={action.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
+                <video
+                  className="w-full h-64 object-cover rounded-t-2xl"
+                  poster={action.thumbnail}
+                  controls
+                  preload="metadata"
+                >
+                  <source src={action.video} type="video/mp4" />
+                  Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
                 
                 {/* TikTok Link Overlay */}
                 {action.tiktokUrl && (

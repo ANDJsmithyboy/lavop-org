@@ -1,9 +1,12 @@
 import { Heart, ChevronRight } from 'lucide-react';
 import { UTM_LINKS } from '../config/chariowLinks';
 import { useState, useEffect } from 'react';
+import { detectLanguage, getLanguageText } from '../utils/language';
 
 const HeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [language, setLanguage] = useState('fr');
+  const [texts, setTexts] = useState(getLanguageText('fr'));
   
   // Images de fond qui défilent - Vraies images VOP
   const backgroundImages = [
@@ -13,6 +16,13 @@ const HeroSection = () => {
     "/images/backgrounds/Donald VOP prêche .jpg",
     "/images/backgrounds/IMG-20250614-WA0064.jpg"
   ];
+
+  // Détection de langue au chargement
+  useEffect(() => {
+    const detectedLang = detectLanguage();
+    setLanguage(detectedLang);
+    setTexts(getLanguageText(detectedLang));
+  }, []);
 
   // Rotation des images toutes les 4 secondes
   useEffect(() => {
@@ -70,11 +80,11 @@ const HeroSection = () => {
           <div className="text-white space-y-8 animate-fade-in-up">
             <div className="space-y-4">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight animate-slide-in-left">
-                L'amour de Dieu
-                <span className="block text-[#FFD700] animate-pulse">en action</span>
+                {texts.hero.title}
+                <span className="block text-[#FFD700] animate-pulse">{texts.hero.subtitle}</span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed max-w-2xl">
-                Jésus-Christ ressuscité, annoncé par les œuvres et la vérité. 
+                {texts.hero.description}
                 <span className="block font-semibold text-[#FFD700] mt-2">
                   Christ pour la Veuve, l'Orphelin et le Pauvre — à Libreville & en provinces
                 </span>
@@ -93,7 +103,7 @@ const HeroSection = () => {
                 className="group bg-[#CC3366] hover:bg-[#FFD700] text-white hover:text-[#003399] px-6 py-3 sm:px-8 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 sm:space-x-3"
               >
                 <Heart className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" fill="currentColor" />
-                <span>Faire un don maintenant</span>
+                <span>{texts.hero.cta1}</span>
                 <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               
@@ -101,7 +111,7 @@ const HeroSection = () => {
                 href="#actions" 
                 className="group bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#003399] px-6 py-3 sm:px-8 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3"
               >
-                <span>Découvrir nos actions</span>
+                <span>{texts.hero.cta2}</span>
                 <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>

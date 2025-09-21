@@ -262,11 +262,11 @@ const StoreSection = () => {
           {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               {/* Product Image */}
-              <div className="relative h-80 overflow-hidden bg-gray-50">
+              <div className="relative h-64 sm:h-80 overflow-hidden bg-gray-50">
                 <img 
                   src={product.image} 
                   alt={product.title}
-                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover sm:object-contain group-hover:scale-110 transition-transform duration-300"
                 />
                 
                 {/* Badges */}

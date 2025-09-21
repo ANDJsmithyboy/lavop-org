@@ -92,10 +92,13 @@ const ActionsSection = () => {
                     {action.description}
                   </p>
                   
-                  <button className="flex items-center space-x-2 text-[#00B0F0] font-semibold hover:text-[#003399] transition-colors group">
+                  <a 
+                    href={`#actions-${action.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="flex items-center space-x-2 text-[#00B0F0] font-semibold hover:text-[#003399] transition-colors group"
+                  >
                     <span>En savoir plus</span>
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  </a>
                 </div>
               </div>
             );

@@ -16,6 +16,16 @@ const FounderVideoSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Video Section */}
           <div className="relative">
+            {/* Photo du fondateur */}
+            <div className="mb-6 text-center">
+              <img 
+                src="/images/founder/photo_andj_ceo.jpg" 
+                alt="ANDJ Daniel Jonathan - Fondateur de LA VOP"
+                className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-[#FFD700] shadow-2xl"
+              />
+              <h3 className="text-xl font-bold text-white mt-4">ANDJ Daniel Jonathan</h3>
+              <p className="text-[#FFD700] font-semibold">Fondateur & Président de LA VOP</p>
+            </div>
             <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl">
               {/* YouTube Video Embed */}
               <div className="relative w-full h-0 pb-[56.25%]">
@@ -41,12 +51,12 @@ const FounderVideoSection = () => {
               <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
                 <Users className="w-6 h-6 text-[#FFD700] mx-auto mb-2" />
                 <div className="text-2xl font-bold">20+</div>
-                <div className="text-white/80 text-sm">Orphelinats soutenus</div>
+                <div className="text-white/80 text-sm">Impact local</div>
               </div>
               <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
                 <Globe className="w-6 h-6 text-[#FFD700] mx-auto mb-2" />
                 <div className="text-2xl font-bold">9</div>
-                <div className="text-white/80 text-sm">Pays étrangers</div>
+                <div className="text-white/80 text-sm">Soutien étranger</div>
               </div>
             </div>
           </div>

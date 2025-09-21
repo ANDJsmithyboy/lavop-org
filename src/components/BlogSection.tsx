@@ -1,5 +1,6 @@
 import { Calendar, User, ArrowRight, Heart, Users, Globe, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import NewsletterSignup from './NewsletterSignup';
 
 const BlogSection = () => {
   const articles = [
@@ -32,7 +33,7 @@ const BlogSection = () => {
       author: "ANDJ Daniel Jonathan",
       date: "7 Juillet 2025",
       category: "Dons & Impact",
-      image: "/images/activities/IMG-20250614-WA0099.jpg",
+      image: "/images/activities/IMG-20250614-WA0058.jpg",
       readTime: "3 min",
       featured: false
     },
@@ -65,7 +66,7 @@ const BlogSection = () => {
       author: "Équipe Formation VOP",
       date: "15 Janvier 2025",
       category: "Formation",
-      image: "/images/activities/IMG-20250614-WA0058.jpg",
+      image: "/images/activities/1000151368.jpg",
       readTime: "6 min",
       featured: false
     },
@@ -280,27 +281,7 @@ const BlogSection = () => {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="bg-gradient-to-r from-[#003399] to-[#00B0F0] rounded-3xl p-8 md:p-12 text-white text-center">
-          <h3 className="text-3xl font-bold mb-4">Restez informé de nos actions</h3>
-          <p className="text-xl text-white/90 mb-8">
-            Recevez nos actualités et témoignages directement dans votre boîte email
-          </p>
-          
-          <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
-            <input 
-              type="email" 
-              placeholder="Votre adresse email"
-              className="flex-1 px-4 py-3 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFD700]"
-            />
-            <button className="bg-[#FFD700] text-[#003399] px-8 py-3 rounded-full font-bold hover:bg-white transition-colors">
-              S'abonner
-            </button>
-          </div>
-          
-          <p className="text-white/70 text-sm mt-4">
-            Nous respectons votre vie privée. Désabonnement possible à tout moment.
-          </p>
-        </div>
+        <NewsletterSignup />
       </div>
     </section>
   );

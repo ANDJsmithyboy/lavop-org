@@ -143,18 +143,38 @@ const ModernDashboard = () => {
   };
 
   const handleSaveArticle = (articleData: any) => {
+    // Récupérer les données du formulaire
+    const form = document.querySelector('#article-form') as HTMLFormElement;
+    if (!form) return;
+
+    const formData = new FormData(form);
+    const newArticleData = {
+      title: formData.get('title') as string,
+      excerpt: formData.get('excerpt') as string,
+      content: formData.get('content') as string,
+      category: formData.get('category') as string,
+      author: 'Équipe VOP',
+      date: new Date().toLocaleDateString('fr-FR', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      }),
+      readTime: '5 min',
+      image: '/images/activities/1000151414.jpg',
+      views: 0,
+      likes: 0,
+      comments: 0,
+      published: false
+    };
+
     if (editingArticle) {
       setArticles(prev => prev.map(article => 
-        article.id === editingArticle.id ? { ...article, ...articleData } : article
+        article.id === editingArticle.id ? { ...article, ...newArticleData } : article
       ));
     } else {
       const newArticle = {
-        ...articleData,
-        id: Date.now(),
-        views: 0,
-        likes: 0,
-        comments: 0,
-        published: false
+        ...newArticleData,
+        id: Date.now()
       };
       setArticles(prev => [...prev, newArticle]);
     }
@@ -607,25 +627,29 @@ const ModernDashboard = () => {
               </button>
             </div>
             
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+            <form id="article-form" className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Titre</label>
                   <input
                     type="text"
+                    name="title"
                     defaultValue={editingArticle?.title || ''}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent"
                     placeholder="Titre de l'article"
+                    required
                   />
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Extrait</label>
                   <textarea
+                    name="excerpt"
                     defaultValue={editingArticle?.excerpt || ''}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent"
                     rows={3}
                     placeholder="Résumé de l'article"
+                    required
                   />
                 </div>
                 
@@ -661,10 +685,12 @@ const ModernDashboard = () => {
                       </button>
                     </div>
                     <textarea
+                      name="content"
                       defaultValue={editingArticle?.content || ''}
                       className="w-full p-4 border-0 focus:ring-0 resize-none"
                       rows={10}
                       placeholder="Contenu de l'article..."
+                      required
                     />
                   </div>
                 </div>
@@ -672,14 +698,15 @@ const ModernDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
-                    <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent">
-                      <option>Actions Locales</option>
-                      <option>Jeunesse</option>
-                      <option>Dons & Impact</option>
-                      <option>Soutien Veuves</option>
-                      <option>Formation</option>
-                      <option>International</option>
-                      <option>Témoignages</option>
+                    <select name="category" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B0F0] focus:border-transparent" required>
+                      <option value="">Sélectionner une catégorie</option>
+                      <option value="Actions Locales">Actions Locales</option>
+                      <option value="Jeunesse">Jeunesse</option>
+                      <option value="Dons & Impact">Dons & Impact</option>
+                      <option value="Soutien Veuves">Soutien Veuves</option>
+                      <option value="Formation">Formation</option>
+                      <option value="International">International</option>
+                      <option value="Témoignages">Témoignages</option>
                     </select>
                   </div>
                   <div>
